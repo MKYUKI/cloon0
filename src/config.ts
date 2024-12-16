@@ -1,17 +1,14 @@
-<<<<<<< HEAD
-export const siteMetadata = {
-    title: "Masaki KusakaのWebサイト",
-    description: "革新的なウェブサイトです。",
-    author: "Masaki Kusaka",
-    siteUrl: "https://cloon0.onrender.com"
-  };
-  
-=======
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
+// siteMetadataとグローバルデータの統合
 
-export const SITE_TITLE = 'Astrofy | Personal Portfolio Website Template';
-export const SITE_DESCRIPTION = 'Astrofy is a free and open-source template for your Personal Portfolio Website built with Astro and TailwindCSS. Create in minutes a website with Blog, CV, Project Section, Store and RSS Feed.';
-export const GENERATE_SLUG_FROM_TITLE = true
-export const TRANSITION_API = true
->>>>>>> 5fba342566a3dfb07e8f78f17c39f74baccd2a3b
+export const siteMetadata = {
+  title: "Masaki KusakaのWebサイト",
+  description: "革新的なウェブサイトです。",
+  author: "Masaki Kusaka",
+  siteUrl: "https://cloon0.onrender.com",
+};
+
+export const SITE_TITLE = "Masaki Kusaka | Personal Portfolio Website";
+export const SITE_DESCRIPTION =
+  "Masaki Kusakaの革新的なウェブサイト。ブログ、CV、プロジェクト、ストア、RSSフィードを含む、AstroとTailwindCSSで構築された最新のポートフォリオです。";
+export const GENERATE_SLUG_FROM_TITLE = true;
+export const TRANSITION_API = true;
