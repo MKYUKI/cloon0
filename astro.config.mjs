@@ -3,14 +3,14 @@ import mdx from '@astrojs/mdx';
 import rss from '@astrojs/rss';
 
 export default defineConfig({
-  site: 'https://ultimate-fusion-appp.vercel.app',
-  output: 'static', // 静的サイトとして出力
+  site: 'https://ultimate-fusion-appp.vercel.app', // サイトURL
+  output: 'static', // 静的サイトモードを有効化
   integrations: [
-    mdx(), // MDXのプラグイン
-    rss({
+    mdx(),
+    rss({ // RSS設定を修正
       title: 'Masaki Kusaka Blog',
       description: '日下真旗の技術ブログ',
-      site: 'https://ultimate-fusion-appp.vercel.app', // ベースURL
+      site: 'https://ultimate-fusion-appp.vercel.app', // サイトURL
       items: [
         {
           title: '日下真旗のポートフォリオと職務経歴',
@@ -34,6 +34,6 @@ export default defineConfig({
     }),
   ],
   build: {
-    outDir: 'dist', // 出力先を指定
+    outDir: 'dist', // 出力ディレクトリを指定
   },
 });
