@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-export const siteMetadata = {
-    title: "Masaki KusakaのWebサイト",
-    description: "革新的なウェブサイトです。",
-    author: "Masaki Kusaka",
-    siteUrl: "https://cloon0.onrender.com"
-  };
-  
-=======
 import { z, defineCollection } from "astro:content";
+
 const blogSchema = z.object({
     title: z.string(),
     description: z.string(),
@@ -41,6 +33,5 @@ const storeCollection = defineCollection({ schema: storeSchema });
 
 export const collections = {
     'blog': blogCollection,
-    'store': storeCollection
-}
->>>>>>> 5fba342566a3dfb07e8f78f17c39f74baccd2a3b
+    'store': storeCollection,
+};
