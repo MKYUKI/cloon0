@@ -16,3 +16,4 @@ node_modules/
 
 # ビルド出力ディレクトリ
 dist/
+.vercel
