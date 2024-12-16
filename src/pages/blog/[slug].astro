@@ -1,51 +1,24 @@
 ---
-<<<<<<< HEAD
-import { getEntryBySlug } from 'astro:content';
+import { getEntry } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 
 const { slug } = Astro.params;
-const post = await getEntryBySlug('blog', slug);
+const post = await getEntry('blog', slug);
 
 if (!post) {
   throw new Error(`Post with slug "${slug}" not found`);
 }
 ---
 <PostLayout>
-  <h1 class="text-3xl font-bold mb-4">{post.title}</h1>
-  <time class="block mb-2 text-sm font-normal leading-none text-gray-400">{post.date.toDateString()}</time>
-  <Markdown>{post.body}</Markdown>
-=======
-import { CollectionEntry, getCollection } from "astro:content";
-import { BlogSchema } from "../../content/config";
-import PostLayout from "../../layouts/PostLayout.astro";
-import createSlug from "../../lib/createSlug"
-
-export async function getStaticPaths() {
-  const postEntries = await getCollection("blog");
-  return postEntries.map((entry) => ({
-    params: { slug: createSlug(entry.data.title, entry.slug) },
-    props: { entry },
-  }));
-}
-
-interface Props {
-  entry: CollectionEntry<"blog">;
-}
-
-const { entry } = Astro.props;
-const post: BlogSchema = entry.data;
-const { Content } = await entry.render();
----
-
-<PostLayout
-  title={post.title}
-  description={post.description}
-  pubDate={post.pubDate}
-  heroImage={post.heroImage}
-  updatedDate={post.updatedDate}
-  badge={post.badge}
-  tags={post.tags}
->
-  <Content />
->>>>>>> 5fba342566a3dfb07e8f78f17c39f74baccd2a3b
+  <h1 class="text-3xl font-bold mb-4">{post.data.title}</h1>
+  <time class="block mb-2 text-sm font-normal leading-none text-gray-400">
+    {new Date(post.data.pubDate).toLocaleDateString('ja-JP', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })}
+  </time>
+  <div class="prose">
+    <Markdown>{post.body}</Markdown>
+  </div>
 </PostLayout>
