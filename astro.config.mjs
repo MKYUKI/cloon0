@@ -1,21 +1,14 @@
 import { defineConfig } from 'astro/config';
-<<<<<<< HEAD
 import tailwind from '@astrojs/tailwind';
-
-export default defineConfig({
-  integrations: [tailwind()],
-  build: {
-    target: 'esnext',
-  },
-});
-=======
-import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
-import tailwind from "@astrojs/tailwind";
+import rss from '@astrojs/rss';
 
-// https://astro.build/config
+// Astro設定の定義
 export default defineConfig({
-  site: 'https://astrofy-template.netlify.app',
-  integrations: [mdx(), sitemap(), tailwind()]
+  site: 'https://cloon0.onrender.com',
+  integrations: [
+    tailwind(), // TailwindCSSの統合
+    sitemap(),  // サイトマップの生成
+    rss(),      // RSSフィードの生成
+  ],
 });
->>>>>>> 5fba342566a3dfb07e8f78f17c39f74baccd2a3b
