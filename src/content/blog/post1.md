@@ -1,7 +1,10 @@
 ---
-title: "最初の投稿"
-description: "これはサンプル投稿です。"
-pubDate: "2024-12-16"
+title: "テストブログ記事"
+description: "これはテスト記事の説明です。"
+pubDate: "2024-12-17"
+slug: "post1"
+heroImage: "/path/to/image.jpg"
+updatedDate: "2024-12-18"
 ---
 
-ここにMarkdownの内容を書きます。
+ここにMarkdownの本文が続きます。

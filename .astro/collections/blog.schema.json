@@ -27,19 +27,26 @@
           ]
         },
         "updatedDate": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "integer",
+              "format": "unix-time"
+            }
+          ]
         },
         "heroImage": {
           "type": "string"
         },
-        "badge": {
+        "slug": {
           "type": "string"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         },
         "$schema": {
           "type": "string"
@@ -48,7 +55,8 @@
       "required": [
         "title",
         "description",
-        "pubDate"
+        "pubDate",
+        "slug"
       ],
       "additionalProperties": false
     }

@@ -1,18 +1,10 @@
 ---
-title: "今後の目標と技術的挑戦"
-description: "社会に貢献するためのスキル向上への取り組み。"
-pubDate: "2024-12-16"
-updatedDate: "2024-12-17"
-heroImage: "/images/goals.jpg"
-tags: ["目標", "学習", "社会貢献"]
+title: "ブログ記事のタイトル"
+description: "この記事の説明"
+pubDate: "2024-12-17"
+slug: "post2" # 必須
+heroImage: "/path/to/image.jpg" # オプション
+updatedDate: "2024-12-18" # オプション
 ---
 
-## 現在の取り組み
-
-- **独学でのスキル習得**:
-  - ProgateでPython基礎を学習。
-  - Udemyでの実践的な教材を購入し、コードスタイルを強化。
-
-- **目標**:
-  - 業務効率化のため、Excelのピボットテーブルやマクロの習得。
-  - Pythonのバックエンド開発スキル向上。
+コンテンツ本文...

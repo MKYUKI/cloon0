@@ -1,21 +1,21 @@
+// astro.config.mjs
 import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
 import tailwind from '@astrojs/tailwind';
-import sitemap from '@astrojs/sitemap';
+import mdx from '@astrojs/mdx';
 import rss from '@astrojs/rss';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://ultimate-fusion-appp.vercel.app',
   integrations: [
-    mdx(),
     tailwind(),
-    sitemap(),
+    mdx(),
     rss({
-      title: 'Masaki Kusakaのブログ',
-      description: 'AIと最新技術に関するブログ',
-      site: 'https://ultimate-fusion-appp.vercel.app',
-      items: [], // RSSアイテムを適切に設定
+      title: 'My Astro Site RSS Feed',
+      description: 'This is my Astro site RSS feed.',
+      site: 'https://your-site-url.com', // あなたのサイトのURLに置き換えてください
+      items: [], // 初期アイテムリスト
     }),
+    sitemap(),
   ],
-  output: 'static',
+  // その他の設定があればここに追加
 });

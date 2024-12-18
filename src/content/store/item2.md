@@ -6,6 +6,7 @@ custom_link: "/contact"
 updatedDate: "2024-12-16"
 price: 2000
 image: "/projects/ai-customer-support.webp"
+pubDate: "2024-12-16"
 ---
 
 ## AIで顧客対応を効率化、顧客満足度向上へ
