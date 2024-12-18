@@ -8,7 +8,7 @@
     ],
     "routes": [
       { "src": "/api/singularity", "dest": "/backend/api.py" },
-      { "src": "/api/contact", "dest": "/backend/api.py" },
+      { "src": "/api/contact", "dest": "/backend/sendMail.py" },
       { "src": "/api/store", "dest": "/backend/api.py" },
       { "src": "/api/process", "dest": "/backend/api.py" },
       { "src": "/contact", "dest": "/pages/contact.astro" },
