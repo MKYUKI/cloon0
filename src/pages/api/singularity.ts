@@ -15,7 +15,7 @@ export default async function handler(
     }
 
     try {
-      const response = await fetch(`https://www.googleapis.com/customsearch/v1?key=YOUR_GOOGLE_API_KEY&cx=YOUR_SEARCH_ENGINE_ID&q=${encodeURIComponent(query)}`);
+      const response = await fetch(`https://www.googleapis.com/customsearch/v1?key=${process.env.GOOGLE_API_KEY}&cx=${process.env.SEARCH_ENGINE_ID}&q=${encodeURIComponent(query)}`);
       
       if (!response.ok) {
         throw new Error('Google検索APIの呼び出しに失敗しました。');
