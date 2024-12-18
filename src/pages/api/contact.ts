@@ -3,7 +3,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import sendgrid from '@sendgrid/mail';
 
-// 環境変数からSendGridのAPIキーを取得
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY as string);
 
 type Data = {
@@ -17,7 +16,6 @@ export default async function handler(
   if (req.method === 'POST') {
     const { name, email, message } = req.body;
 
-    // バリデーション（簡易版）
     if (!name || !email || !message) {
       return res.status(400).json({ message: 'すべてのフィールドを入力してください。' });
     }

@@ -1,72 +1,40 @@
-// pages/api/singularity.ts
+// src/pages/api/singularity.ts
+
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Configuration, OpenAIApi } from 'openai';
-import fetch from 'node-fetch';
+import { GoogleSearchResponse, GoogleSearchItem } from '../../types/GoogleSearchResponse';
 
-type Data = {
-  result: string;
-};
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (req.method === 'POST') {
+    const { query } = req.body;
 
-// 環境変数の設定
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
-
-// 各APIのハンドリング関数
-const handleOpenAI = async (prompt: string): Promise<string> => {
-  const response = await openai.createCompletion({
-    model: 'text-davinci-003',
-    prompt: prompt,
-    max_tokens: 150,
-  });
-  return response.data.choices[0].text?.trim() || 'OpenAIからの応答がありません。';
-};
-
-const handleGoogleSearch = async (query: string): Promise<string> => {
-  const apiKey = process.env.GOOGLE_API_KEY;
-  const searchEngineId = process.env.GOOGLE_SEARCH_ENGINE_ID;
-  const response = await fetch(
-    `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${searchEngineId}&q=${encodeURIComponent(query)}`
-  );
-  const data = await response.json();
-  if (data.items && data.items.length > 0) {
-    return data.items.map((item: any) => `${item.title}: ${item.link}`).join('\n');
-  }
-  return 'Google検索結果が見つかりませんでした。';
-};
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  if (req.method !== 'POST') {
-    res.setHeader('Allow', ['POST']);
-    return res.status(405).json({ result: `Method ${req.method} Not Allowed` });
-  }
-
-  const { prompt, api } = req.body;
-
-  if (!prompt) {
-    return res.status(400).json({ result: 'プロンプトが提供されていません。' });
-  }
-
-  try {
-    let result = '';
-
-    switch (api) {
-      case 'openai':
-        result = await handleOpenAI(prompt);
-        break;
-      case 'google':
-        result = await handleGoogleSearch(prompt);
-        break;
-      // 他のAPIを追加する場合はここにケースを追加
-      default:
-        result = await handleOpenAI(prompt); // デフォルトはOpenAI
-        break;
+    if (!query) {
+      return res.status(400).json({ message: 'クエリを入力してください。' });
     }
 
-    res.status(200).json({ result });
-  } catch (error) {
-    console.error('Error in /api/singularity:', error);
-    res.status(500).json({ result: '内部サーバーエラーが発生しました。' });
+    try {
+      const response = await fetch(`https://www.googleapis.com/customsearch/v1?key=YOUR_GOOGLE_API_KEY&cx=YOUR_SEARCH_ENGINE_ID&q=${encodeURIComponent(query)}`);
+      
+      if (!response.ok) {
+        throw new Error('Google検索APIの呼び出しに失敗しました。');
+      }
+
+      const data: GoogleSearchResponse = await response.json();
+
+      if (data.items && data.items.length > 0) {
+        const results = data.items.map((item: GoogleSearchItem) => `${item.title}: ${item.link}`).join('\n');
+        return res.status(200).json({ results });
+      }
+
+      return res.status(200).json({ results: 'Google検索結果が見つかりませんでした。' });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'サーバーエラーが発生しました。' });
+    }
+  } else {
+    res.setHeader('Allow', 'POST');
+    res.status(405).json({ message: `Method ${req.method} Not Allowed` });
   }
 }
