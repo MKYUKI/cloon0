@@ -1,6 +1,43 @@
 ---
-title: "Hello World"
-layout: "../layouts/BaseLayout.astro"
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Card from "../components/Card.astro";
+import Chatbot from "../components/Chatbot.astro";
+import ContactForm from "../components/ContactForm.astro";
+import TimeLine from "../components/TimeLine.astro";
+
+const projects = [
+  { title: "AIプロジェクト1", description: "革新的なAIソリューション", image: "/project1.webp", link: "/projects/ai1" },
+  { title: "AIプロジェクト2", description: "未来を創るAI技術", image: "/project2.webp", link: "/projects/ai2" }
+];
+
+const timelineEvents = [
+  { title: "プロジェクト開始", date: "2023-01-01", description: "開発スタート" },
+  { title: "デプロイ", date: "2023-06-20", description: "Vercelにデプロイ" }
+];
 ---
-<h1>Hello, Astro!</h1>
-<p>This is a minimal static site.</p>
+
+<BaseLayout>
+  <section class="text-center mb-16">
+    <h1 class="text-4xl font-bold mb-4">ようこそ、Masaki KusakaのWebサイトへ！</h1>
+    <p class="mb-8">AIと未来技術を融合した革新的なソリューションを提供します。</p>
+
+    <!-- チャットボット -->
+    <Chatbot />
+
+    <!-- プロジェクト一覧 -->
+    <h2 class="text-2xl font-bold mb-4">プロジェクト</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {projects.map((project) => (
+        <Card {...project} />
+      ))}
+    </div>
+
+    <!-- タイムライン -->
+    <h2 class="text-2xl font-bold mb-4 mt-16">プロジェクトの進行状況</h2>
+    <TimeLine events={timelineEvents} />
+
+    <!-- お問い合わせフォーム -->
+    <h2 class="text-2xl font-bold mb-4 mt-16">お問い合わせ</h2>
+    <ContactForm />
+  </section>
+</BaseLayout>
