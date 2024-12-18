@@ -13,7 +13,7 @@ export default defineConfig({
       title: 'My Astro Site RSS Feed',
       description: 'This is my Astro site RSS feed.',
       site: 'https://your-site-url.com', // あなたのサイトのURLに置き換えてください
-      items: [], // 初期アイテムリスト
+      items: [], // フィードに含める記事などのアイテム
     }),
     sitemap(),
   ],
