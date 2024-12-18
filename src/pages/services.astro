@@ -1,8 +1,18 @@
 ---
-title: "Services"
-layout: "../layouts/BaseLayout.astro"
+// pages/services.astro
+import BaseLayout from '../src/layouts/BaseLayout.astro';
 ---
-<section class="p-8">
-  <h1 class="text-2xl font-bold mb-4">Services</h1>
-  <p>Minimal placeholder content to avoid merge conflict errors.</p>
-</section>
+
+<BaseLayout title="サービス - Cloon0" description="Cloon0が提供するサービス一覧">
+  <div class="max-w-4xl mx-auto p-8">
+    <h1 class="text-4xl font-bold mb-4">サービス</h1>
+    <div class="space-y-6">
+      <div class="p-4 border rounded-lg">
+        <h2 class="text-2xl font-semibold mb-2">サービス名</h2>
+        <p class="mb-2">サービスの詳細をここに記載します。</p>
+        <a href="#" class="text-indigo-600 hover:underline">詳細を見る</a>
+      </div>
+      <!-- 他のサービスも同様に追加 -->
+    </div>
+  </div>
+</BaseLayout>

@@ -1,4 +1,11 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-// または必要な方のコードを残して不要なものは削除
+// src/layouts/PostLayout.astro
+import BaseLayout from './BaseLayout.astro';
+
+const { title, description } = Astro.props;
 ---
+<BaseLayout title={title} description={description}>
+  <article class="prose lg:prose-xl mx-auto">
+    <slot />
+  </article>
+</BaseLayout>

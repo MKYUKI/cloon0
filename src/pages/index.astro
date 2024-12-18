@@ -1,51 +1,9 @@
 ---
-// index.astro
-import BaseLayout from "../layouts/BaseLayout.astro";
-
-const projects = [
-  { title: "TransformerXLの革新", link: "https://arxiv.org/abs/1901.02860" },
-  { title: "Attentionの最適化", link: "https://example.com/attention" },
-];
+// pages/index.astro
+import BaseLayout from '../src/layouts/BaseLayout.astro';
+import Home from './index.tsx';
 ---
 
-<BaseLayout title="Masaki Kusaka's AI Website">
-  <!-- プロフィールセクション -->
-  <section class="mb-8">
-    <h2 class="text-2xl font-bold mb-2">プロフィール</h2>
-    <p>Masaki KusakaはAIとTransformerXLを駆使し、革新的な研究と社会変革を目指しています。</p>
-  </section>
-
-  <!-- プロジェクトセクション -->
-  <section class="mb-8">
-    <h2 class="text-2xl font-bold mb-2">プロジェクト</h2>
-    <ul>
-      {projects.map(project => (
-        <li>
-          <a href={project.link} class="text-blue-500 hover:underline">{project.title}</a>
-        </li>
-      ))}
-    </ul>
-  </section>
-
-  <!-- チャットセクション -->
-  <section class="mb-8">
-    <h2 class="text-2xl font-bold mb-2">AIチャット</h2>
-    <iframe
-      src="https://chat.openai.com"
-      width="100%"
-      height="500"
-      frameborder="0"
-    ></iframe>
-  </section>
-
-  <!-- TransformerXL デモ -->
-  <section>
-    <h2 class="text-2xl font-bold mb-2">TransformerXLのデモ</h2>
-    <p>現在開発中のTransformerXLモデルの概要と成果を以下のリンクからご覧ください。</p>
-    <a
-      href="https://example.com/transformerxl-demo"
-      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      >TransformerXL デモを試す</a
-    >
-  </section>
+<BaseLayout title="0 - 次世代プラットフォーム" description="全ブラウザ・全Webサイトを繋ぐ、Xを超える汎用性を持つ世界初の次世代プラットフォーム">
+  <Home />
 </BaseLayout>

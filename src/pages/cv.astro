@@ -1,8 +1,36 @@
 ---
-title: "CV - Masaki Kusaka"
-layout: "../layouts/BaseLayout.astro"
+// pages/cv.astro
+import BaseLayout from '../src/layouts/BaseLayout.astro';
 ---
-<section class="p-8">
-  <h1 class="text-4xl font-bold mb-4">My CV</h1>
-  <p>This is a minimal CV page.</p>
-</section>
+
+<BaseLayout title="履歴書 - Cloon0" description="Masaki Kusakaの履歴書">
+  <div class="max-w-4xl mx-auto p-8">
+    <h1 class="text-4xl font-bold mb-4">履歴書</h1>
+    <section class="mb-6">
+      <h2 class="text-2xl font-semibold mb-2">プロフィール</h2>
+      <p>ここにプロフィール情報を記載します。</p>
+    </section>
+    <section class="mb-6">
+      <h2 class="text-2xl font-semibold mb-2">職歴</h2>
+      <ul class="list-disc list-inside">
+        <li><strong>会社名</strong> - 役職 (期間)</li>
+        <li><strong>会社名</strong> - 役職 (期間)</li>
+      </ul>
+    </section>
+    <section class="mb-6">
+      <h2 class="text-2xl font-semibold mb-2">学歴</h2>
+      <ul class="list-disc list-inside">
+        <li><strong>学校名</strong> - 学位 (期間)</li>
+        <li><strong>学校名</strong> - 学位 (期間)</li>
+      </ul>
+    </section>
+    <section>
+      <h2 class="text-2xl font-semibold mb-2">スキル</h2>
+      <ul class="list-disc list-inside">
+        <li>スキル1</li>
+        <li>スキル2</li>
+        <li>スキル3</li>
+      </ul>
+    </section>
+  </div>
+</BaseLayout>

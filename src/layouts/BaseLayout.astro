@@ -1,24 +1,18 @@
 ---
-// BaseLayout.astro
-const { title } = Astro.props;
----
+// src/layouts/BaseLayout.astro
+import '../styles/global.css';
 
+const { title, description } = Astro.props;
+---
+<!DOCTYPE html>
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title || "Masaki Kusaka's Web"}</title>
-    <link rel="stylesheet" href="/global.css" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
   </head>
-  <body class="bg-gray-100 text-gray-800">
-    <header class="p-4 bg-blue-500 text-white text-center">
-      <h1 class="text-3xl font-bold">Masaki Kusaka's Innovative AI Website</h1>
-    </header>
-    <main class="container mx-auto p-8">
-      <slot />
-    </main>
-    <footer class="p-4 bg-gray-700 text-white text-center">
-      <p>© 2024 Masaki Kusaka. All Rights Reserved.</p>
-    </footer>
+  <body>
+    <slot />
   </body>
 </html>
