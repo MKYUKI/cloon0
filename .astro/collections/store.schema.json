@@ -32,19 +32,26 @@
             }
           ]
         },
-        "pricing": {
-          "type": "string"
+        "pubDate": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "integer",
+              "format": "unix-time"
+            }
+          ]
         },
-        "oldPricing": {
-          "type": "string"
+        "price": {
+          "type": "number"
         },
-        "badge": {
-          "type": "string"
-        },
-        "checkoutUrl": {
-          "type": "string"
-        },
-        "heroImage": {
+        "image": {
           "type": "string"
         },
         "$schema": {
@@ -55,7 +62,9 @@
         "title",
         "description",
         "custom_link_label",
-        "updatedDate"
+        "custom_link",
+        "updatedDate",
+        "pubDate"
       ],
       "additionalProperties": false
     }

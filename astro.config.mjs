@@ -1,21 +1,6 @@
-// astro.config.mjs
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
-import mdx from '@astrojs/mdx';
-import rss from '@astrojs/rss';
-import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  integrations: [
-    tailwind(),
-    mdx(),
-    rss({
-      title: 'My Astro Site RSS Feed',
-      description: 'This is my Astro site RSS feed.',
-      site: 'https://your-site-url.com', // あなたのサイトのURLに置き換えてください
-      items: [], // フィードに含める記事などのアイテム
-    }),
-    sitemap(),
-  ],
-  // その他の設定があればここに追加
+  site: 'https://ultimate-fusion-appp-9cj5lptqf-mkyukis-projects.vercel.app', // 適切なURLに置き換えてください
+  output: 'static',
 });
