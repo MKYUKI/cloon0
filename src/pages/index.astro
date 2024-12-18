@@ -1,43 +1,51 @@
 ---
+// index.astro
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Card from "../components/Card.astro";
-import Chatbot from "../components/Chatbot.astro";
-import ContactForm from "../components/ContactForm.astro";
-import TimeLine from "../components/TimeLine.astro";
 
 const projects = [
-  { title: "AIプロジェクト1", description: "革新的なAIソリューション", image: "/project1.webp", link: "/projects/ai1" },
-  { title: "AIプロジェクト2", description: "未来を創るAI技術", image: "/project2.webp", link: "/projects/ai2" }
-];
-
-const timelineEvents = [
-  { title: "プロジェクト開始", date: "2023-01-01", description: "開発スタート" },
-  { title: "デプロイ", date: "2023-06-20", description: "Vercelにデプロイ" }
+  { title: "TransformerXLの革新", link: "https://arxiv.org/abs/1901.02860" },
+  { title: "Attentionの最適化", link: "https://example.com/attention" },
 ];
 ---
 
-<BaseLayout>
-  <section class="text-center mb-16">
-    <h1 class="text-4xl font-bold mb-4">ようこそ、Masaki KusakaのWebサイトへ！</h1>
-    <p class="mb-8">AIと未来技術を融合した革新的なソリューションを提供します。</p>
+<BaseLayout title="Masaki Kusaka's AI Website">
+  <!-- プロフィールセクション -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold mb-2">プロフィール</h2>
+    <p>Masaki KusakaはAIとTransformerXLを駆使し、革新的な研究と社会変革を目指しています。</p>
+  </section>
 
-    <!-- チャットボット -->
-    <Chatbot />
-
-    <!-- プロジェクト一覧 -->
-    <h2 class="text-2xl font-bold mb-4">プロジェクト</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {projects.map((project) => (
-        <Card {...project} />
+  <!-- プロジェクトセクション -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold mb-2">プロジェクト</h2>
+    <ul>
+      {projects.map(project => (
+        <li>
+          <a href={project.link} class="text-blue-500 hover:underline">{project.title}</a>
+        </li>
       ))}
-    </div>
+    </ul>
+  </section>
 
-    <!-- タイムライン -->
-    <h2 class="text-2xl font-bold mb-4 mt-16">プロジェクトの進行状況</h2>
-    <TimeLine events={timelineEvents} />
+  <!-- チャットセクション -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold mb-2">AIチャット</h2>
+    <iframe
+      src="https://chat.openai.com"
+      width="100%"
+      height="500"
+      frameborder="0"
+    ></iframe>
+  </section>
 
-    <!-- お問い合わせフォーム -->
-    <h2 class="text-2xl font-bold mb-4 mt-16">お問い合わせ</h2>
-    <ContactForm />
+  <!-- TransformerXL デモ -->
+  <section>
+    <h2 class="text-2xl font-bold mb-2">TransformerXLのデモ</h2>
+    <p>現在開発中のTransformerXLモデルの概要と成果を以下のリンクからご覧ください。</p>
+    <a
+      href="https://example.com/transformerxl-demo"
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >TransformerXL デモを試す</a
+    >
   </section>
 </BaseLayout>
