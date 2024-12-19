@@ -1,14 +1,9 @@
 // src/components/Background/QuantumGeometric.tsx
 import React from 'react';
 import Particles from '@tsparticles/react';
-import { loadFull } from 'tsparticles'; // 'tsparticles' からインポート
-import type { Engine, IOptions } from '@tsparticles/engine';
+import type { IOptions } from '@tsparticles/engine';
 
 const QuantumGeometric: React.FC = () => {
-  const particlesInit = async (main: Engine) => {
-    await loadFull(main);
-  };
-
   const options: IOptions = {
     background: {
       color: {
@@ -18,11 +13,11 @@ const QuantumGeometric: React.FC = () => {
       opacity: 1,
       position: "center center",
       repeat: "no-repeat",
-      size: "cover"
+      size: "cover",
     },
     fpsLimit: 60,
     interactivity: {
-      detectsOn: "canvas", // 追加: インタラクション検出対象を指定
+      detectsOn: "canvas",
       events: {
         onClick: { enable: true, mode: "push" },
         onHover: { 
@@ -35,8 +30,8 @@ const QuantumGeometric: React.FC = () => {
           enable: false, 
           mode: "repulse", 
           selectors: "", 
-          type: "circle" // 修正: "circle" または "rectangle" を指定
-        }
+          type: "circle" 
+        },
       },
       modes: {
         push: { quantity: 4 },
@@ -44,9 +39,35 @@ const QuantumGeometric: React.FC = () => {
       },
     },
     particles: {
-      color: { value: "#1e90ff" },
-      links: { color: "#1e90ff", distance: 150, enable: true, opacity: 0.5, width: 1 },
-      collisions: { enable: true },
+      color: { 
+        value: "#1e90ff",
+        animation: { 
+          enable: false, 
+          speed: 1, 
+          sync: false, 
+          offset: 0,
+          count: 0,
+          decay: 0,
+          delay: 0
+        },
+      },
+      links: { 
+        color: "#1e90ff", 
+        distance: 150, 
+        enable: true, 
+        opacity: 0.5, 
+        width: 1 
+      },
+      collisions: { 
+        enable: true, 
+        mode: "bounce",       
+        bounce: { 
+          horizontal: { value: 2 },   
+          vertical: { value: 2 }
+        }, 
+        maxSpeed: 10,         
+        overlap: { enable: false, retries: 0 }        
+      },
       move: { 
         direction: "none", 
         enable: true, 
@@ -55,7 +76,10 @@ const QuantumGeometric: React.FC = () => {
         speed: 2, 
         straight: false 
       },
-      number: { density: { enable: true, value_area: 800 }, value: 50 },
+      number: { 
+        density: { enable: true, value_area: 800 }, 
+        value: 50 
+      },
       opacity: { value: 0.5 },
       shape: { type: "circle" },
       size: { value: { min: 1, max: 5 } },
@@ -66,7 +90,6 @@ const QuantumGeometric: React.FC = () => {
   return (
     <Particles
       id="tsparticles"
-      init={particlesInit}
       options={options}
     />
   );

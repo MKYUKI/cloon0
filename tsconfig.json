@@ -3,7 +3,7 @@
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "skipLibCheck": true, // 追加: ライブラリの型チェックをスキップ
+    "skipLibCheck": true, // ライブラリの型チェックをスキップ
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
