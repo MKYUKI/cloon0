@@ -1,7 +1,7 @@
 // src/components/Background/QuantumGeometric.tsx
 import React from 'react';
 import Particles from '@tsparticles/react';
-import { loadFull } from 'tsparticles';
+import { loadFull } from '@tsparticles/engine';
 import type { Engine, IOptions } from '@tsparticles/engine';
 
 const QuantumGeometric: React.FC = () => {
