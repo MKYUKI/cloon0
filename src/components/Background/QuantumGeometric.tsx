@@ -1,7 +1,7 @@
 // src/components/Background/QuantumGeometric.tsx
 import React from 'react';
 import Particles from '@tsparticles/react';
-import { loadFull } from 'tsparticles';
+import { loadFull } from 'tsparticles'; // インポート元を 'tsparticles' に変更
 import type { Engine, IOptions } from '@tsparticles/engine';
 
 const QuantumGeometric: React.FC = () => {
@@ -32,7 +32,7 @@ const QuantumGeometric: React.FC = () => {
       links: { color: "#1e90ff", distance: 150, enable: true, opacity: 0.5, width: 1 },
       collisions: { enable: true },
       move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: false, speed: 2, straight: false },
-      number: { density: { enable: true, area: 800 }, value: 50 },
+      number: { density: { enable: true, value_area: 800 }, value: 50 }, // 'value_area' を使用
       opacity: { value: 0.5 },
       shape: { type: "circle" },
       size: { value: { min: 1, max: 5 } },
