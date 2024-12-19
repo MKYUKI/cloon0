@@ -5,65 +5,40 @@ import { Engine, loadFull } from 'tsparticles';
 
 const QuantumGeometric: React.FC = () => {
   const particlesInit = async (main: Engine) => {
-    // tsParticlesの全機能をロード
     await loadFull(main);
   };
 
   return (
     <Particles
-      id="quantum-geometric"
+      id="tsparticles"
       init={particlesInit}
       options={{
         background: {
-          color: { value: "#000000" }, // 背景色を黒に設定
-        },
-        particles: {
-          color: { value: "#FFFFFF" }, // パーティクルの色を白に設定
-          shape: { type: "triangle" }, // 幾何学的な形状（例: triangle）
-          number: {
-            value: 80,
-            density: { enable: true, area: 800 },
-          },
-          opacity: {
-            value: 0.5,
-            random: true,
-            anim: {
-              enable: true,
-              speed: 0.5,
-              opacity_min: 0.1,
-              sync: false,
-            },
-          },
-          size: {
-            value: 3,
-            random: true,
-            anim: {
-              enable: true,
-              speed: 2,
-              size_min: 1,
-              sync: false,
-            },
-          },
-          move: {
-            enable: true,
-            speed: 2,
-            direction: "none",
-            random: false,
-            straight: false,
-            out_mode: "out",
-            attract: { enable: false, rotateX: 600, rotateY: 1200 },
+          color: {
+            value: "#ffffff",
           },
         },
+        fpsLimit: 60,
         interactivity: {
           events: {
-            onhover: { enable: true, mode: "repulse" },
-            onclick: { enable: true, mode: "push" },
+            onClick: { enable: true, mode: "push" },
+            onHover: { enable: true, mode: "repulse" },
             resize: true,
           },
           modes: {
-            repulse: { distance: 100, duration: 0.4 },
-            push: { particles_nb: 4 },
+            push: { quantity: 4 },
+            repulse: { distance: 200, duration: 0.4 },
           },
+        },
+        particles: {
+          color: { value: "#1e90ff" },
+          links: { color: "#1e90ff", distance: 150, enable: true, opacity: 0.5, width: 1 },
+          collisions: { enable: true },
+          move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: false, speed: 2, straight: false },
+          number: { density: { enable: true, area: 800 }, value: 50 },
+          opacity: { value: 0.5 },
+          shape: { type: "circle" },
+          size: { value: { min: 1, max: 5 } },
         },
         detectRetina: true,
       }}

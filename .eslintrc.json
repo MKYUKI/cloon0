@@ -1,25 +1,25 @@
-// .eslintrc.json
 {
-  "extends": ["airbnb", "airbnb/hooks", "next", "next/core-web-vitals"],
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
-  "rules": {
-    "react/react-in-jsx-scope": "off", // Next.jsでは不要
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "ts": "never",
-        "tsx": "never"
-      }
-    ],
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"],
-    // その他のカスタムルール...
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
   },
-  "settings": {
-    "import/resolver": {
-      "typescript": {}
-    }
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "next/core-web-vitals"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    // ここにカスタムルールを追加
   }
 }
