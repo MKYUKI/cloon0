@@ -35,7 +35,7 @@ const QuantumGeometric: React.FC = () => {
           links: { color: "#1e90ff", distance: 150, enable: true, opacity: 0.5, width: 1 },
           collisions: { enable: true },
           move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: false, speed: 2, straight: false },
-          number: { density: { enable: true, area: 800 }, value: 50 },
+          number: { density: { enable: true, area: 800 }, value: 50 }, // 'area'が有効なプロパティであることを確認
           opacity: { value: 0.5 },
           shape: { type: "circle" },
           size: { value: { min: 1, max: 5 } },
