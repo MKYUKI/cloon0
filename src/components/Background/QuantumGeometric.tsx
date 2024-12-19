@@ -66,8 +66,8 @@ const QuantumGeometric: React.FC = () => {
           vertical: { value: 2 }
         }, 
         absorb: { 
-          enable: false, 
-          // 必要に応じて以下のプロパティを設定
+          enable: false,
+          // 必要な場合は以下のプロパティを追加
           // color: { value: "#ffffff" },
           // opacity: { value: 1 },
           // speed: { value: 2 },
