@@ -22,10 +22,21 @@ const QuantumGeometric: React.FC = () => {
     },
     fpsLimit: 60,
     interactivity: {
+      detectsOn: "canvas", // 追加: インタラクション検出対象を指定
       events: {
         onClick: { enable: true, mode: "push" },
-        onHover: { enable: true, mode: "repulse", parallax: { enable: false, force: 60, smooth: 10 } }, // 'parallax' を追加
-        resize: { enable: true },
+        onHover: { 
+          enable: true, 
+          mode: "repulse", 
+          parallax: { enable: false, force: 60, smooth: 10 } 
+        },
+        resize: { enable: true, delay: 0 },
+        onDiv: { 
+          enable: false, 
+          mode: "repulse", 
+          selectors: "", 
+          type: "circle" // 修正: "circle" または "rectangle" を指定
+        }
       },
       modes: {
         push: { quantity: 4 },
@@ -36,7 +47,14 @@ const QuantumGeometric: React.FC = () => {
       color: { value: "#1e90ff" },
       links: { color: "#1e90ff", distance: 150, enable: true, opacity: 0.5, width: 1 },
       collisions: { enable: true },
-      move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: false, speed: 2, straight: false },
+      move: { 
+        direction: "none", 
+        enable: true, 
+        outModes: { default: "bounce" }, 
+        random: false, 
+        speed: 2, 
+        straight: false 
+      },
       number: { density: { enable: true, value_area: 800 }, value: 50 },
       opacity: { value: 0.5 },
       shape: { type: "circle" },
