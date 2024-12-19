@@ -1,102 +1,10 @@
-/* src/styles/global.css */
-
-/* Tailwind CSSの基本設定 */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* カスタムスタイル */
-
-/* ボディ全体のスタイル */
+/* ダークモード切替や基本スタイルはここで可能 */
 body {
-  @apply bg-gray-900 text-white;
-}
-
-/* ヘッダーとフッターのスタイル */
-header, footer {
-  @apply bg-black shadow-md;
-}
-
-/* ヘッダー内のタイトル */
-header h1 {
-  @apply text-3xl font-bold;
-}
-
-/* ナビゲーションリンクのスタイル */
-nav ul {
-  @apply flex flex-wrap justify-center;
-}
-
-nav ul li {
-  @apply mx-4 my-2;
-}
-
-nav ul li a {
-  @apply text-white hover:text-gray-400 transition-colors duration-300;
-}
-
-/* フッター内の段落 */
-footer p {
-  @apply mb-2 text-sm text-gray-400;
-}
-
-/* フッター内のリンク画像 */
-footer a img {
-  @apply h-6 w-6 inline-block mx-2;
-}
-
-/* 各コンテナのパディング */
-.chatbot-container, .contact-form, .text-generator, .timeline-container {
-  @apply p-4;
-}
-
-/* レスポンシブデザイン */
-@media (max-width: 768px) {
-  header, footer {
-    @apply p-4;
-  }
-
-  nav ul {
-    @apply flex-col items-center;
-  }
-
-  nav ul li {
-    @apply mb-4;
-  }
-
-  main {
-    @apply p-4;
-  }
-
-  .chatbot-container, .contact-form, .text-generator, .timeline-container {
-    @apply p-2;
-  }
-}
-
-/* 追加のカスタムスタイル */
-
-/* サイドバーのスタイル */
-.sidebar {
-  @apply bg-gray-800 text-white p-4;
-}
-
-.sidebar ul {
-  @apply list-none p-0 m-0;
-}
-
-.sidebar ul li {
-  @apply mb-2;
-}
-
-.sidebar ul li a {
-  @apply text-white hover:text-gray-400 transition-colors duration-300;
-}
-
-/* リンクのグローバルスタイル */
-a {
-  @apply no-underline text-blue-500;
-}
-
-a:hover {
-  @apply text-blue-700;
+  margin:0;
+  padding:0;
+  font-family: sans-serif;
 }

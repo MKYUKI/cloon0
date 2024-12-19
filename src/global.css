@@ -1,8 +1,21 @@
-/* styles/global.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ダークモードサポート */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+}
+.dark {
+  --bg-color: #0f172a;
+  --text-color: #ffffff;
+}
+
 body {
-  @apply bg-gray-100 text-gray-900;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
 }

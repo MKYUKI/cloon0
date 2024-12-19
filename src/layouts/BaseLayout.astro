@@ -1,18 +1,38 @@
+<!-- src/components/Layout/BaseLayout.astro -->
 ---
-// src/layouts/BaseLayout.astro
-import '../styles/global.css';
-
-const { title, description } = Astro.props;
+import QuantumGeometric from '../Background/QuantumGeometric';
 ---
-<!DOCTYPE html>
 <html lang="ja">
   <head>
+    <!-- ヘッド要素（メタデータ、タイトル、リンクなど） -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
+    <title>0世界を繋ぐ新次元ゲートウェイ</title>
+    <link href="/styles/global.css" rel="stylesheet">
   </head>
-  <body>
-    <slot />
+  <body class="bg-gray-900 text-white">
+    <QuantumGeometric />
+    <!-- ヘッダー -->
+    <header>
+      <h1 class="text-3xl font-bold">0世界を繋ぐ新次元ゲートウェイ</h1>
+      <nav>
+        <ul class="flex flex-wrap justify-center">
+          <li><a href="#">ホーム</a></li>
+          <li><a href="#">プロジェクト</a></li>
+          <li><a href="#">お問い合わせ</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+    <!-- メインコンテンツ -->
+    <main>
+      <slot />
+    </main>
+    
+    <!-- フッター -->
+    <footer>
+      <p>&copy; 2024 0世界を繋ぐ新次元ゲートウェイ. All rights reserved.</p>
+      <a href="#"><img src="/path/to/icon.png" alt="アイコン"></a>
+    </footer>
   </body>
 </html>

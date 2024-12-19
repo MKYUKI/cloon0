@@ -1,0 +1,19 @@
+---
+// src/components/Layout/BaseLayout.astro
+import QuantumGeometric from '../Background/QuantumGeometric';
+---
+<html lang="ja">
+  <head>
+    <!-- ヘッド要素（メタデータ、タイトル、リンクなど） -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>0世界を繋ぐ新次元ゲートウェイ</title>
+    <!-- Tailwind CSSの導入が必要な場合 -->
+    <link href="/dist/output.css" rel="stylesheet">
+  </head>
+  <body>
+    <QuantumGeometric />
+    <!-- ここにメインコンテンツを挿入 -->
+    <slot />
+  </body>
+</html>
