@@ -1,8 +1,7 @@
-// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
+  swcMinify: true, // 正しく認識されるはず
   async headers() {
     return [
       {
@@ -14,7 +13,7 @@ const nextConfig = {
           },
         ],
       },
-    ];
+    ]
   },
 }
 
