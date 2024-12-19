@@ -17,7 +17,7 @@
     "openai": "^4.77.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
-    "tsparticles": "3.7.1" 
+    "tsparticles": "3.7.1"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",

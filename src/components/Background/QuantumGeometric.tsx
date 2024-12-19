@@ -14,6 +14,11 @@ const QuantumGeometric: React.FC = () => {
       color: {
         value: "#ffffff",
       },
+      image: "",
+      opacity: 1,
+      position: "center center",
+      repeat: "no-repeat",
+      size: "cover"
     },
     fpsLimit: 60,
     interactivity: {
