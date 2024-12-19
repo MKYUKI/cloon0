@@ -9,6 +9,7 @@
     "plugin:react/recommended",
     "next/core-web-vitals"
   ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -21,7 +22,12 @@
     "@typescript-eslint"
   ],
   "rules": {
-    // 必要に応じてカスタムルールをここに追加
+    // 必要に応じてカスタムルールを追加
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   },
   "overrides": [
     {
