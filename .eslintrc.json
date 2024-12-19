@@ -20,6 +20,18 @@
     "react"
   ],
   "rules": {
-    // ここにカスタムルールを追加
-  }
+    // カスタムルールをここに追加
+  },
+  "overrides": [
+    {
+      "files": ["src/extensions/chrome-extension/**/*.js"],
+      "env": {
+        "browser": true,
+        "webextensions": true
+      },
+      "globals": {
+        "chrome": "readonly"
+      }
+    }
+  ]
 }

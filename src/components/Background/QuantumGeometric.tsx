@@ -1,10 +1,10 @@
 // src/components/Background/QuantumGeometric.tsx
 import React from 'react';
 import Particles from '@tsparticles/react';
-import { Engine, loadFull } from 'tsparticles';
+import { loadFull } from 'tsparticles';
 
 const QuantumGeometric: React.FC = () => {
-  const particlesInit = async (main: Engine) => {
+  const particlesInit = async (main: any) => {
     await loadFull(main);
   };
 
