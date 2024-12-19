@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true, // Next.js 13.5.7で有効なオプション
+  swcMinify: true, // Next.js 13.5.7 で有効なオプション
   async headers() {
     return [
       {

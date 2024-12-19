@@ -2,8 +2,7 @@
 import React from 'react';
 import Particles from '@tsparticles/react';
 import { loadFull } from 'tsparticles';
-import type { Engine } from '@tsparticles/engine';
-import type { IOptions } from 'tsparticles-engine';
+import type { Engine, IOptions } from '@tsparticles/engine';
 
 const QuantumGeometric: React.FC = () => {
   const particlesInit = async (main: Engine) => {
@@ -21,7 +20,7 @@ const QuantumGeometric: React.FC = () => {
       events: {
         onClick: { enable: true, mode: "push" },
         onHover: { enable: true, mode: "repulse" },
-        resize: { enable: true }, // オブジェクト形式に修正
+        resize: { enable: true },
       },
       modes: {
         push: { quantity: 4 },
@@ -33,13 +32,13 @@ const QuantumGeometric: React.FC = () => {
       links: { color: "#1e90ff", distance: 150, enable: true, opacity: 0.5, width: 1 },
       collisions: { enable: true },
       move: { direction: "none", enable: true, outModes: { default: "bounce" }, random: false, speed: 2, straight: false },
-      number: { density: { enable: true, area: 800 }, value: 50 }, // 'area' が有効なプロパティであることを確認
+      number: { density: { enable: true, value_area: 800 }, value: 50 }, // 'value_area' を使用
       opacity: { value: 0.5 },
       shape: { type: "circle" },
       size: { value: { min: 1, max: 5 } },
     },
     detectRetina: true,
-  } as IOptions;
+  };
 
   return (
     <Particles
