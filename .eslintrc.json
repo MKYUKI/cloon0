@@ -17,10 +17,11 @@
     "sourceType": "module"
   },
   "plugins": [
-    "react"
+    "react",
+    "@typescript-eslint"
   ],
   "rules": {
-    // カスタムルールをここに追加
+    // 必要に応じてカスタムルールをここに追加
   },
   "overrides": [
     {
@@ -31,6 +32,9 @@
       },
       "globals": {
         "chrome": "readonly"
+      },
+      "rules": {
+        "no-undef": "off"
       }
     }
   ]

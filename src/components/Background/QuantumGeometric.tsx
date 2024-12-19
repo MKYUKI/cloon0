@@ -2,9 +2,10 @@
 import React from 'react';
 import Particles from '@tsparticles/react';
 import { loadFull } from 'tsparticles';
+import type { Engine } from 'tsparticles-engine';
 
 const QuantumGeometric: React.FC = () => {
-  const particlesInit = async (main: any) => {
+  const particlesInit = async (main: Engine) => {
     await loadFull(main);
   };
 
@@ -23,7 +24,7 @@ const QuantumGeometric: React.FC = () => {
           events: {
             onClick: { enable: true, mode: "push" },
             onHover: { enable: true, mode: "repulse" },
-            resize: true,
+            resize: { enable: true }, // 修正箇所
           },
           modes: {
             push: { quantity: 4 },
