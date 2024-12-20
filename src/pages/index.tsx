@@ -29,13 +29,15 @@ export default function Home() {
       <header className="p-4 border-b bg-white flex items-center justify-center">
         <h1 className="text-xl font-bold">Chat GPT Search-like Interface</h1>
       </header>
-      <main className="flex-1 overflow-auto p-4">
-        <div className="max-w-3xl mx-auto">
-          {messages.map((msg, idx) => (
-            <div key={idx} className={`my-2 whitespace-pre-wrap ${msg.role === 'user' ? 'text-blue-700' : 'text-green-700'}`}>
-              <strong>{msg.role === 'user' ? 'You: ' : 'Assistant: '}</strong>{msg.content}
-            </div>
-          ))}
+      <main className="flex-1 overflow-auto p-4 flex flex-col">
+        <div className="max-w-3xl mx-auto flex-1 flex flex-col justify-end">
+          <div className="mb-4">
+            {messages.map((msg, idx) => (
+              <div key={idx} className={`my-2 whitespace-pre-wrap ${msg.role === 'user' ? 'text-blue-700' : 'text-green-700'}`}>
+                <strong>{msg.role === 'user' ? 'You: ' : 'Assistant: '}</strong>{msg.content}
+              </div>
+            ))}
+          </div>
         </div>
       </main>
       <footer className="border-t p-4 bg-gray-100 flex">
@@ -43,7 +45,7 @@ export default function Home() {
           className="flex-1 border border-gray-300 rounded-md p-2 mr-2"
           value={input}
           onChange={e => setInput(e.target.value)}
-          placeholder="Type your message..."
+          placeholder="Type your message and press Send..."
         />
         <button
           className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
