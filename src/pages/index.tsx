@@ -24,6 +24,9 @@ export default function Home() {
     }
   }
 
+  // 将来的なファイル添付機能、Chrome拡張連携フックポイント(ここでコンポーネント追加など可能)
+  // Google Chrome拡張や他web連携は、別APIエンドポイント・OAuthなどで対応可能
+
   return (
     <div className="flex flex-col h-screen">
       <header className="p-4 border-b bg-white flex items-center justify-center">
