@@ -1,4 +1,3 @@
-// src/pages/api/chat.ts
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { openai } from '../../lib/openaiClient'
 

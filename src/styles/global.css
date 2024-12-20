@@ -2,10 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 幾何学的で量子的な雰囲気を出すための簡易スタイル（実際には動的背景などをJavaScriptやCanvasで追加可能） */
+/* シンプルな量子的ライン風背景例(実際にはもっと凝ったCSSやCanvasで表現可) */
 body {
   background: white;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  font-family: sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    to right,
+    rgba(0, 100, 200, 0.1),
+    rgba(0, 100, 200, 0.1) 1px,
+    transparent 1px,
+    transparent 20px
+  ),
+  repeating-linear-gradient(
+    to bottom,
+    rgba(0, 100, 200, 0.1),
+    rgba(0, 100, 200, 0.1) 1px,
+    transparent 1px,
+    transparent 20px
+  );
+  pointer-events: none;
+  z-index: -1;
 }

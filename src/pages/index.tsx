@@ -20,16 +20,16 @@ export default function Home() {
     if (data.answer) {
       setMessages((prev) => [...prev, { role: 'assistant', content: data.answer }])
     } else {
-      setMessages((prev) => [...prev, { role: 'assistant', content: 'エラーが発生しました。' }])
+      setMessages((prev) => [...prev, { role: 'assistant', content: 'Error occurred.' }])
     }
   }
 
   return (
     <div className="h-screen w-screen flex flex-col">
-      <div className="flex-1 overflow-auto p-4 bg-white">
+      <div className="flex-1 overflow-auto p-4">
         <div className="max-w-3xl mx-auto">
           {messages.map((msg, index) => (
-            <div key={index} className={`my-2 ${msg.role === 'user' ? 'text-blue-700' : 'text-green-700'}`}>
+            <div key={index} className={`my-2 whitespace-pre-wrap ${msg.role === 'user' ? 'text-blue-700' : 'text-green-700'}`}>
               <strong>{msg.role === 'user' ? 'You: ' : 'Assistant: '}</strong>
               {msg.content}
             </div>
