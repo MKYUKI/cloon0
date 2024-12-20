@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 画面全体を白背景にし、最小限のUI適用 */
 body {
   margin: 0;
-  font-family: sans-serif;
   background: #ffffff;
+  font-family: sans-serif;
 }
