@@ -6,14 +6,13 @@ body {
   margin: 0;
   font-family: sans-serif;
   background: #ffffff;
-  /* 幾何学的で量子的な雰囲気のアニメ背景(簡易) */
+  /* 量子的な青い線のアニメ背景(簡易) */
   background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* 青い動く幾何学ラインの簡易表現 */
 body::before {
   content: "";
   position: fixed;

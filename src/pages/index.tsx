@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 export default function Home() {
   const [input, setInput] = useState('')
-  const [messages, setMessages] = useState<{role: string, content: string}[]>([])
+  const [messages, setMessages] = useState<{role: string; content: string}[]>([])
 
   const sendMessage = async () => {
     const userMessage = input.trim()
