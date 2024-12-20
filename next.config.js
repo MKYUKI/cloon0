@@ -1,5 +1,5 @@
 module.exports = {
-  eslint: {
-    ignoreDuringBuilds: true
-  }
-}
+  devIndicators: {
+    port: 3001, // 使用したいポート番号
+  },
+};
