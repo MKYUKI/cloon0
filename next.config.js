@@ -1,5 +1,5 @@
 module.exports = {
   devIndicators: {
-    port: 3001, // 使用したいポート番号
+    port: 3002, // 使用するポート番号
   },
 };
