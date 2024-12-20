@@ -2,20 +2,16 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { openai } from '../../lib/openaiClient'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' })
-  }
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
   const { message } = req.body
-  if (!message) {
-    return res.status(400).json({ error: 'No message provided' })
-  }
+  if (!message) return res.status(400).json({ error: 'No message provided' })
 
   try {
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
-        { role: 'system', content: 'You are a helpful assistant.' },
+        { role: 'system', content: 'You are a helpful assistant in a chat GPT search-like website.' },
         { role: 'user', content: message }
       ]
     })

@@ -7,7 +7,7 @@ export default function Home() {
   const sendMessage = async () => {
     if (!input.trim()) return
     const userMessage = input.trim()
-    setMessages((prev) => [...prev, { role: 'user', content: userMessage }])
+    setMessages(prev => [...prev, { role: 'user', content: userMessage }])
     setInput('')
 
     const res = await fetch('/api/chat', {
@@ -18,9 +18,9 @@ export default function Home() {
 
     const data = await res.json()
     if (data.answer) {
-      setMessages((prev) => [...prev, { role: 'assistant', content: data.answer }])
+      setMessages(prev => [...prev, { role: 'assistant', content: data.answer }])
     } else {
-      setMessages((prev) => [...prev, { role: 'assistant', content: 'Error occurred.' }])
+      setMessages(prev => [...prev, { role: 'assistant', content: 'Error occurred.' }])
     }
   }
 
@@ -28,8 +28,8 @@ export default function Home() {
     <div className="h-screen w-screen flex flex-col">
       <div className="flex-1 overflow-auto p-4">
         <div className="max-w-3xl mx-auto">
-          {messages.map((msg, index) => (
-            <div key={index} className={`my-2 whitespace-pre-wrap ${msg.role === 'user' ? 'text-blue-700' : 'text-green-700'}`}>
+          {messages.map((msg, idx) => (
+            <div key={idx} className={`my-2 whitespace-pre-wrap ${msg.role === 'user' ? 'text-blue-700' : 'text-green-700'}`}>
               <strong>{msg.role === 'user' ? 'You: ' : 'Assistant: '}</strong>
               {msg.content}
             </div>
@@ -40,7 +40,7 @@ export default function Home() {
         <input
           className="flex-1 border border-gray-300 rounded-md p-2 mr-2"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={e => setInput(e.target.value)}
           placeholder="Type your message..."
         />
         <button
