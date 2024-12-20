@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
-        { role: 'system', content: 'You are a helpful assistant in a chat GPT search-like website.' },
+        { role: 'system', content: 'You are a helpful assistant.' },
         { role: 'user', content: message }
       ]
     })

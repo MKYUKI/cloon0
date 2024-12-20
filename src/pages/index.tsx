@@ -5,8 +5,8 @@ export default function Home() {
   const [messages, setMessages] = useState<{ role: string; content: string }[]>([])
 
   const sendMessage = async () => {
-    if (!input.trim()) return
     const userMessage = input.trim()
+    if (!userMessage) return
     setMessages(prev => [...prev, { role: 'user', content: userMessage }])
     setInput('')
 
@@ -25,7 +25,7 @@ export default function Home() {
   }
 
   return (
-    <div className="h-screen w-screen flex flex-col">
+    <div className="flex flex-col h-screen">
       <div className="flex-1 overflow-auto p-4">
         <div className="max-w-3xl mx-auto">
           {messages.map((msg, idx) => (

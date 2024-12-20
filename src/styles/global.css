@@ -2,35 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 背景に量子的な青いグリッド模様 */
+/* 画面全体を白背景にし、最小限のUI適用 */
 body {
+  margin: 0;
   font-family: sans-serif;
   background: #ffffff;
-  min-height: 100vh;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-/* 背景: 薄い青線の量子グリッド風 */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: repeating-linear-gradient(
-    to right,
-    rgba(0,100,200,0.1) 0px,
-    rgba(0,100,200,0.1) 1px,
-    transparent 1px,
-    transparent 20px
-  ),
-  repeating-linear-gradient(
-    to bottom,
-    rgba(0,100,200,0.1) 0px,
-    rgba(0,100,200,0.1) 1px,
-    transparent 1px,
-    transparent 20px
-  );
-  pointer-events: none;
-  z-index: -1;
 }
