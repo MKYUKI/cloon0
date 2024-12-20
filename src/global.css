@@ -2,20 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ダークモードサポート */
-:root {
-  --bg-color: #ffffff;
-  --text-color: #000000;
-}
-.dark {
-  --bg-color: #0f172a;
-  --text-color: #ffffff;
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #ffffff;
+  /* 幾何学的で量子的な雰囲気のアニメ背景(簡易) */
+  background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+/* 青い動く幾何学ラインの簡易表現 */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('data:image/svg+xml,<svg width="2000" height="2000" xmlns="http://www.w3.org/2000/svg"><path d="M0 100 C 500 0 500 200 1000 100 C 1500 0 1500 200 2000 100" stroke="blue" fill="transparent"/><path d="M0 300 C 500 200 500 400 1000 300 C 1500 200 1500 400 2000 300" stroke="blue" fill="transparent"/></svg>') repeat;
+  opacity: 0.1;
+  animation: moveBg 10s linear infinite alternate;
+  z-index: -1;
+}
+
+@keyframes moveBg {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 200px; }
 }

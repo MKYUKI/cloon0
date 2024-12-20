@@ -25,8 +25,11 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-white">
-      <div className="flex-1 overflow-auto p-4">
+    <div className="flex flex-col h-screen">
+      <header className="p-4 border-b bg-white flex items-center justify-center">
+        <h1 className="text-xl font-bold">Chat GPT Search-like Interface</h1>
+      </header>
+      <main className="flex-1 overflow-auto p-4">
         <div className="max-w-3xl mx-auto">
           {messages.map((msg, idx) => (
             <div key={idx} className={`my-2 whitespace-pre-wrap ${msg.role === 'user' ? 'text-blue-700' : 'text-green-700'}`}>
@@ -34,8 +37,8 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </div>
-      <div className="border-t p-4 bg-gray-100 flex">
+      </main>
+      <footer className="border-t p-4 bg-gray-100 flex">
         <input
           className="flex-1 border border-gray-300 rounded-md p-2 mr-2"
           value={input}
@@ -48,7 +51,7 @@ export default function Home() {
         >
           Send
         </button>
-      </div>
+      </footer>
     </div>
   )
 }

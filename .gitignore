@@ -22,3 +22,6 @@ Thumbs.db
 logs/
 *.log
 .vercel
+
+# Local Netlify folder
+.netlify
