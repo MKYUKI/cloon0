@@ -24,13 +24,13 @@ export default function Home() {
     }
   }
 
-  // 将来的なファイル添付機能、Chrome拡張連携フックポイント(ここでコンポーネント追加など可能)
-  // Google Chrome拡張や他web連携は、別APIエンドポイント・OAuthなどで対応可能
+  // 将来的な機能拡張ポイント(Chrome拡張、ファイル添付など):
+  // 例えばファイルアップロード用コンポーネントや他サイト連携用のAPIコール追加可能
 
   return (
     <div className="flex flex-col h-screen">
       <header className="p-4 border-b bg-white flex items-center justify-center">
-        <h1 className="text-xl font-bold">Chat GPT Search-like Interface</h1>
+        <h1 className="text-xl font-bold">Chat GPT Search-like Interface (Next-Gen)</h1>
       </header>
       <main className="flex-1 overflow-auto p-4 flex flex-col">
         <div className="max-w-3xl mx-auto flex-1 flex flex-col justify-end">

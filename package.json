@@ -2,9 +2,9 @@
   "name": "cloon0-nextgen-platform",
   "version": "1.0.0",
   "scripts": {
-    "dev": "PORT=3001 next dev",
+    "dev": "PORT=3002 next dev",
     "build": "next build",
-    "start": "PORT=3001 next start"
+    "start": "PORT=3002 next start"
   },
   "dependencies": {
     "autoprefixer": "10.4.20",
