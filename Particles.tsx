@@ -10,10 +10,9 @@ const ParticlesBackground: React.FC = () => {
     await loadFull(engine);
   }, []);
 
-  const particlesLoaded = useCallback(async (_container: Container | undefined) => {
-    // パーティクルがロードされた後の処理
-    if (_container) {
-      console.log('Particles loaded:', _container);
+  const particlesLoaded = useCallback(async (container: Container | undefined) => {
+    if (container) {
+      console.log('Particles loaded:', container);
     }
   }, []);
 
