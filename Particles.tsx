@@ -1,7 +1,7 @@
 // src/components/Particles.tsx
 import React, { useCallback } from 'react';
 import Particles from '@tsparticles/react';
-import { Engine } from '@tsparticles/engine';
+import { Engine, Container } from '@tsparticles/engine';
 import { loadFull } from 'tsparticles';
 
 const ParticlesBackground: React.FC = () => {
@@ -10,8 +10,11 @@ const ParticlesBackground: React.FC = () => {
     await loadFull(engine);
   }, []);
 
-  const particlesLoaded = useCallback(async (container) => {
-    // パーティクルがロードされた後の処理（必要に応じて）
+  const particlesLoaded = useCallback(async (_container: Container | undefined) => {
+    // パーティクルがロードされた後の処理
+    if (_container) {
+      console.log('Particles loaded:', _container);
+    }
   }, []);
 
   const options = {

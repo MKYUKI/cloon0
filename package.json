@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3006",
-    "build": "next build",
-    "start": "next start -p 3006"
+    "start": "next start -p 3006",
+    "build": "next build"
   },
   "dependencies": {
     "@tsparticles/engine": "^3.7.1",
@@ -28,7 +28,7 @@
     "@types/react": "19.0.2",
     "@typescript-eslint/eslint-plugin": "^8.18.1",
     "@typescript-eslint/parser": "^8.18.1",
-    "eslint": "^9.17.0",
+    "eslint": "^9",
     "eslint-config-next": "15.1.2",
     "eslint-plugin-react": "^7.37.2",
     "glob": "^11.0.0",
