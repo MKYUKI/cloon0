@@ -1,3 +1,4 @@
+// src/pages/404.tsx
 export default function NotFoundPage() {
   return (
     <div className="flex items-center justify-center h-screen text-gray-700">
