@@ -1,12 +1,11 @@
-// components/QuantumLines.tsx
+// src/components/QuantumLines.tsx
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from '@react-three/drei';
 
-const Line = ({ color }: { color: string }) => {
+const Line = ({ color, speed }: { color: string; speed: number }) => {
   const ref = useRef<THREE.Line>(null!);
-  const speed = 0.01;
 
   useFrame(() => {
     ref.current.rotation.x += speed;
@@ -39,9 +38,9 @@ const QuantumLines = () => {
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} />
       <OrbitControls enableZoom={false} />
-      <Line color="#00aaff" />
-      <Line color="#00aaff" />
-      <Line color="#00aaff" />
+      <Line color="#00aaff" speed={0.01} />
+      <Line color="#00aaff" speed={0.015} />
+      <Line color="#00aaff" speed={0.02} />
       {/* 必要に応じてラインを追加 */}
     </Canvas>
   );

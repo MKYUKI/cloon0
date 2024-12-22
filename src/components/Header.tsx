@@ -1,4 +1,4 @@
-// components/Header.tsx
+// src/components/Header.tsx
 import Link from 'next/link';
 import AuthButton from './AuthButton';
 

@@ -1,8 +1,8 @@
-// pages/api/profile.ts
+// src/pages/api/profile.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import dbConnect from '../../lib/mongodb';
-import User, { IUser } from '../../models/User';
+import dbConnect from '../lib/mongodb';
+import User, { IUser } from '../lib/models/User';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });

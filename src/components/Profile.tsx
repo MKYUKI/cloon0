@@ -1,4 +1,4 @@
-// components/Profile.tsx
+// src/components/Profile.tsx
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 

@@ -1,4 +1,4 @@
-// pages/api/auth/[...nextauth].ts
+// src/pages/api/auth/[...nextauth].ts
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
@@ -9,9 +9,9 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async session({ session, token, user }) {
-      // セッションにユーザーIDを追加
+    async session({ session, token }) {
       if (session.user) {
         session.user.id = token.sub;
       }

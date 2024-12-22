@@ -1,8 +1,8 @@
-// pages/profile.tsx
+// src/pages/profile.tsx
 import type { NextPage } from 'next';
 import { useSession } from 'next-auth/react';
 import Profile from '../components/Profile';
-import AuthButton from '../components/AuthButton';
+import Header from '../components/Header';
 
 const ProfilePage: NextPage = () => {
   const { data: session, status } = useSession();
@@ -14,18 +14,18 @@ const ProfilePage: NextPage = () => {
   if (!session) {
     return (
       <div>
-        <AuthButton />
-        <p>ログインしてください。</p>
+        <Header />
+        <main className="main">
+          <p>ログインしてください。</p>
+        </main>
       </div>
     );
   }
 
   return (
     <div>
-      <header>
-        <AuthButton />
-      </header>
-      <main>
+      <Header />
+      <main className="main">
         <Profile />
       </main>
     </div>

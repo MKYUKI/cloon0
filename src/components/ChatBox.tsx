@@ -1,4 +1,4 @@
-// components/ChatBox.tsx
+// src/components/ChatBox.tsx
 import { useState } from 'react';
 
 const ChatBox = () => {
