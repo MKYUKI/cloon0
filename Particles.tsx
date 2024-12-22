@@ -14,7 +14,7 @@ const ParticlesBackground: React.FC = () => {
     if (container) {
       console.log('Particles loaded:', container);
     }
-  }, []);
+  }, []);  
 
   const options = {
     background: {

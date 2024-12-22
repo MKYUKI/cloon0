@@ -1,7 +1,18 @@
-// src/pages/_app.tsx
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+// pages/_app.tsx
+import '../styles/global.css';
+import { SessionProvider } from 'next-auth/react';
+import type { AppProps } from 'next/app';
+import Header from '../components/Header';
+import QuantumLines from '../components/QuantumLines';
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+  return (
+    <SessionProvider session={session}>
+      <QuantumLines />
+      <Header />
+      <Component {...pageProps} />
+    </SessionProvider>
+  );
 }
+
+export default MyApp;
