@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Configuration, OpenAIApi } from 'openai';
 
 const configuration = new Configuration({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY, // NEXT_PUBLICを外してサーバーサイドでのみアクセス可能に
 });
 
 const openai = new OpenAIApi(configuration);
@@ -25,6 +25,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       prompt,
       max_tokens: 150,
       temperature: 0.7,
+      n: 1,
+      stop: null,
     });
 
     const responseText = completion.data.choices[0].text?.trim();

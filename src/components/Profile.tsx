@@ -25,6 +25,7 @@ const Profile = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState<UserProfile | null>(null);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (session?.user?.email) {
@@ -72,12 +73,15 @@ const Profile = () => {
       const data = await res.json();
       setProfile(data.user);
       setEditing(false);
+      setMessage('プロフィールが更新されました。');
     } else {
+      const errorData = await res.json();
+      setMessage(errorData.error || 'プロフィールの更新に失敗しました。');
       console.error('Failed to update profile');
     }
   };
 
-  if (!profile) return <div>Loading...</div>;
+  if (!profile) return <div>読み込み中...</div>;
 
   return (
     <div className="profile-container">
@@ -88,17 +92,18 @@ const Profile = () => {
       <h2>{profile.name}</h2>
       <p>{profile.email}</p>
       <div className="social-links">
-        {profile.socialLinks.github && <a href={profile.socialLinks.github}>GitHub</a>}
-        {profile.socialLinks.youtube && <a href={profile.socialLinks.youtube}>YouTube</a>}
-        {profile.socialLinks.twitter && <a href={profile.socialLinks.twitter}>Twitter</a>}
-        {profile.socialLinks.facebook && <a href={profile.socialLinks.facebook}>Facebook</a>}
-        {profile.socialLinks.paypal && <a href={profile.socialLinks.paypal}>PayPal</a>}
-        {profile.socialLinks.amazonJP && <a href={profile.socialLinks.amazonJP}>Amazon JP</a>}
-        {profile.socialLinks.amazonUS && <a href={profile.socialLinks.amazonUS}>Amazon US</a>}
+        {profile.socialLinks.github && <a href={profile.socialLinks.github} target="_blank" rel="noopener noreferrer">GitHub</a>}
+        {profile.socialLinks.youtube && <a href={profile.socialLinks.youtube} target="_blank" rel="noopener noreferrer">YouTube</a>}
+        {profile.socialLinks.twitter && <a href={profile.socialLinks.twitter} target="_blank" rel="noopener noreferrer">Twitter</a>}
+        {profile.socialLinks.facebook && <a href={profile.socialLinks.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>}
+        {profile.socialLinks.paypal && <a href={profile.socialLinks.paypal} target="_blank" rel="noopener noreferrer">PayPal</a>}
+        {profile.socialLinks.amazonJP && <a href={profile.socialLinks.amazonJP} target="_blank" rel="noopener noreferrer">Amazon JP</a>}
+        {profile.socialLinks.amazonUS && <a href={profile.socialLinks.amazonUS} target="_blank" rel="noopener noreferrer">Amazon US</a>}
       </div>
       <button onClick={() => setEditing(!editing)} className="edit-button">
         {editing ? 'キャンセル' : '編集'}
       </button>
+      {message && <p className="message">{message}</p>}
       {editing && form && (
         <form onSubmit={handleSubmit} className="edit-form">
           <input

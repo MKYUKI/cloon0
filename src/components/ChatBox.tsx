@@ -26,10 +26,10 @@ const ChatBox = () => {
       if (res.ok) {
         setResponse(data.result);
       } else {
-        setResponse(data.error || 'An error occurred');
+        setResponse(data.error || 'エラーが発生しました');
       }
     } catch (error) {
-      setResponse('An unexpected error occurred');
+      setResponse('予期せぬエラーが発生しました');
       console.error('Error:', error);
     } finally {
       setLoading(false);
@@ -45,6 +45,7 @@ const ChatBox = () => {
           onChange={(e) => setInput(e.target.value)}
           placeholder="質問を入力してください..."
           className="input-field"
+          required
         />
         <button type="submit" disabled={loading} className="submit-button">
           {loading ? '送信中...' : '送信'}

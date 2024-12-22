@@ -1,43 +1,48 @@
 // components/QuantumLines.tsx
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { useRef, useEffect } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useRef } from 'react';
 import * as THREE from 'three';
+import { OrbitControls } from '@react-three/drei';
 
-const QuantumLines = () => {
-  const linesRef = useRef<THREE.Line[]>([]);
+const Line = ({ color }: { color: string }) => {
+  const ref = useRef<THREE.Line>(null!);
+  const speed = 0.01;
 
-  useEffect(() => {
-    linesRef.current.forEach((line) => {
-      const speed = 0.01;
-      const animate = () => {
-        line.rotation.x += speed;
-        line.rotation.y += speed;
-        requestAnimationFrame(animate);
-      };
-      animate();
-    });
-  }, []);
+  useFrame(() => {
+    ref.current.rotation.x += speed;
+    ref.current.rotation.y += speed;
+  });
 
-  const createLine = () => {
-    const points = [];
-    for (let i = 0; i < 5; i++) {
-      points.push(new THREE.Vector3(Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5));
-    }
-    const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    const material = new THREE.LineBasicMaterial({ color: '#00aaff', linewidth: 2 });
-    return new THREE.Line(geometry, material);
-  };
+  const points = [
+    new THREE.Vector3(-5, -5, 0),
+    new THREE.Vector3(5, -5, 0),
+    new THREE.Vector3(5, 5, 0),
+    new THREE.Vector3(-5, 5, 0),
+    new THREE.Vector3(-5, -5, 0),
+  ];
 
-  const lines = Array.from({ length: 10 }, () => createLine());
+  const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
   return (
-    <Canvas style={{ position: 'fixed', top: 0, left: 0, zIndex: -1 }} camera={{ position: [0, 0, 20] }}>
+    <line ref={ref} geometry={geometry}>
+      <lineBasicMaterial attach="material" color={color} linewidth={2} />
+    </line>
+  );
+};
+
+const QuantumLines = () => {
+  return (
+    <Canvas
+      style={{ position: 'fixed', top: 0, left: 0, zIndex: -1 }}
+      camera={{ position: [0, 0, 20], fov: 75 }}
+    >
       <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} />
       <OrbitControls enableZoom={false} />
-      {lines.map((line, index) => (
-        <primitive object={line} key={index} ref={(el: any) => (linesRef.current[index] = el)} />
-      ))}
+      <Line color="#00aaff" />
+      <Line color="#00aaff" />
+      <Line color="#00aaff" />
+      {/* 必要に応じてラインを追加 */}
     </Canvas>
   );
 };

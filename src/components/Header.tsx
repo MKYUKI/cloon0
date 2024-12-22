@@ -12,6 +12,12 @@ const Header = () => {
         <Link href="/profile">
           <a className="nav-link">プロフィール</a>
         </Link>
+        <Link href="/projects">
+          <a className="nav-link">プロジェクト</a>
+        </Link>
+        <Link href="/services">
+          <a className="nav-link">サービス</a>
+        </Link>
       </nav>
       <AuthButton />
     </header>
