@@ -1,29 +1,31 @@
-```gitignore
 # Node modules
 node_modules/
+
 # Build output
 .next/
 dist/
+
 # Local environment variables
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+
 # Vercel
 .vercel/
+
 # Python
 venv/
 __pycache__/
 *.pyc
+
 # OS generated files
 .DS_Store
 Thumbs.db
+
 # Logs
 logs/
 *.log
-.vercel
 
 # Local Netlify folder
 .netlify
-# .gitignore
-.env.local

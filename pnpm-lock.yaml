@@ -24,7 +24,7 @@ importers:
         specifier: latest
         version: 15.1.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       next-auth:
-        specifier: ^4.20.1
+        specifier: ^4.24.11
         version: 4.24.11(next@15.1.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       postcss:
         specifier: ^8.4.21
