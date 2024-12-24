@@ -7,20 +7,12 @@ import clientPromise from '../../../lib/mongodb';
 export default NextAuth({
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     // 他のプロバイダーを追加可能
   ],
   adapter: MongoDBAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET,
-  callbacks: {
-    async session({ session, user }) {
-      // セッションにユーザーIDを追加
-      if (session.user) {
-        session.user.id = user.id;
-      }
-      return session;
-    },
-  },
+  // 他の設定オプション
 });

@@ -1,11 +1,12 @@
 // src/components/Particles.tsx
 import React, { useCallback } from 'react';
 import Particles from '@tsparticles/react';
-import { loadFull, Engine, Container } from '@tsparticles/engine';
+import { loadFull } from '@tsparticles/engine';
+import type { Engine, Container } from '@tsparticles/engine';
 
 const ParticlesBackground: React.FC = () => {
   const particlesInit = useCallback(async (engine: Engine) => {
-    // tsParticlesをフルロード
+    // tsParticles をフルロード
     await loadFull(engine);
   }, []);
 
