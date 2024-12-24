@@ -5,6 +5,7 @@ import ParticlesBackground from '../components/Particles';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState } from 'react';
 import Image from 'next/image';
+import dbConnect from '../lib/mongodb'; // MongoDB接続関数のインポート
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
