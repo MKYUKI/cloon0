@@ -21,7 +21,11 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['src/extensions/chrome-extension/**/*.js'],
+      files: [
+        'src/extensions/chrome-extension/**/*.js',
+        'src/extensions/chrome-extension/**/*.ts',
+        'src/extensions/chrome-extension/**/*.tsx',
+      ],
       env: {
         browser: true,
       },
