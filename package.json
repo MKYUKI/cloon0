@@ -26,16 +26,16 @@
     "three": "^0.171.0"
   },
   "devDependencies": {
-  "@types/node": "^22.10.2",
-  "@types/react": "^18.3.18",
-  "@types/react-dom": "18.2.0",
-  "@typescript-eslint/eslint-plugin": "8.18.2",
-  "@typescript-eslint/parser": "8.18.2",
-  "eslint": "9.17.0",
-  "eslint-config-next": "13.4.19",
-  "eslint-plugin-react": "^7.37.3",
-  "typescript": "5.7.2"
-},
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "18.2.0",
+    "@typescript-eslint/eslint-plugin": "8.18.2",
+    "@typescript-eslint/parser": "8.18.2",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "13.4.19",
+    "eslint-plugin-react": "^7.37.3",
+    "typescript": "5.7.2"
+  },
   "pnpm": {
     "overrides": {
       "typescript": "5.7.2"
