@@ -1,4 +1,5 @@
 // src/pages/api/chat.ts
+import { NextApiRequest, NextApiResponse } from 'next';
 import { Configuration, OpenAIApi } from 'openai';
 
 const configuration = new Configuration({
@@ -6,7 +7,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -25,7 +26,7 @@ export default async function handler(req, res) {
     });
 
     res.status(200).json({ result: completion.data.choices[0].text });
-  } catch (error) {
+  } catch (error: any) {
     console.error('OpenAI API error:', error);
     res.status(500).json({ error: 'Failed to fetch data from OpenAI API' });
   }

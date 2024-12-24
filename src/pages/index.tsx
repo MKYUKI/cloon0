@@ -5,7 +5,6 @@ import ParticlesBackground from '../components/Particles';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState } from 'react';
 import Image from 'next/image';
-import dbConnect from '../lib/mongodb'; // MongoDB接続関数のインポート
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
@@ -55,7 +54,7 @@ const Home: NextPage = () => {
               <Image
                 src={session.user.image}
                 alt="プロフィール画像"
-                width={96} // 24 * 4 (Tailwind CSSのw-24相当)
+                width={96} // 24 * 4 (Tailwind CSS の w-24 相当)
                 height={96} // 24 * 4
                 className="rounded-full mb-4"
               />
@@ -63,7 +62,7 @@ const Home: NextPage = () => {
             <p className="mb-4">こんにちは, {session.user?.name}</p>
             <button
               onClick={() => signOut()}
-              className="px-4 py-2 bg-quantumBlue text-white rounded mb-4"
+              className="px-4 py-2 bg-blue-500 text-white rounded mb-4"
             >
               ログアウト
             </button>
@@ -71,7 +70,7 @@ const Home: NextPage = () => {
         ) : (
           <button
             onClick={() => signIn()}
-            className="px-4 py-2 bg-quantumBlue text-white rounded mb-4"
+            className="px-4 py-2 bg-blue-500 text-white rounded mb-4"
           >
             ログイン
           </button>
@@ -86,7 +85,7 @@ const Home: NextPage = () => {
             className="w-80 h-32 p-2 border border-gray-300 rounded mb-4"
             required
           />
-          <button type="submit" className="px-4 py-2 bg-quantumBlue text-white rounded">
+          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
             送信
           </button>
         </form>
