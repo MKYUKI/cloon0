@@ -1,13 +1,29 @@
-/* styles/globals.css */
+/* src/styles/globals.css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .z-1 {
+    z-index: 1;
+  }
+  .mt-18 {
+    margin-top: 4.5rem;
+  }
+  .-mt-18 {
+    margin-top: -4.5rem;
+  }
+}
+
+/* メインコンテンツ */
+.main {
+  @apply p-4 relative z-1 -mt-18;
+}
+
 /* カスタムスタイル */
 body {
   @apply bg-white text-black font-sans m-0 p-0 relative min-h-screen;
-  background-color: white;
-  color: black;
   font-family: 'Arial', sans-serif;
 }
 
@@ -54,17 +70,12 @@ body::after {
 }
 
 .profile-image {
-  @apply w-10 h-10 rounded-full mr-2;
+  @apply w-36 h-36 rounded-full border-4 border-white -mt-18 mx-auto;
 }
 
 .login-button,
 .logout-button {
   @apply px-4 py-2 ml-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-700;
-}
-
-/* メインコンテンツ */
-.main {
-  @apply p-4 relative z-1;
 }
 
 /* チャットボックス */
@@ -95,10 +106,6 @@ body::after {
 
 .background-image {
   @apply w-full h-48 bg-cover bg-center rounded;
-}
-
-.profile-image {
-  @apply w-36 h-36 rounded-full border-4 border-white -mt-18 mx-auto;
 }
 
 .social-links a {
@@ -145,4 +152,43 @@ body::after {
   .edit-form {
     @apply w-11/12;
   }
+}
+
+/* ダークモード用のスタイル */
+body.dark {
+  @apply bg-gray-900 text-white;
+}
+
+.header.dark {
+  @apply bg-gray-800 border-gray-700;
+}
+
+.nav-link.dark {
+  @apply text-blue-400;
+}
+
+.chat-box.dark {
+  @apply bg-gray-800 border-gray-700;
+}
+
+.response.dark {
+  @apply bg-gray-700 border-blue-400;
+}
+
+.profile-container.dark {
+  @apply bg-gray-800;
+}
+
+.edit-form.dark input {
+  @apply bg-gray-700 text-white border-gray-600;
+}
+
+.edit-button.dark,
+.save-button.dark {
+  @apply bg-blue-400 hover:bg-blue-600;
+}
+
+.login-button.dark,
+.logout-button.dark {
+  @apply bg-blue-400 hover:bg-blue-600;
 }

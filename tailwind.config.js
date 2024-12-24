@@ -1,12 +1,23 @@
 // tailwind.config.js
 module.exports = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,astro}',
-    './components/**/*.{js,ts,jsx,tsx,astro}',
-    './layouts/**/*.{js,ts,jsx,tsx,astro}',
+    './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        quantumBlue: '#00aaff', // 薄い青色
+      },
+      animation: {
+        'quantum-move': 'quantumMove 10s infinite',
+      },
+      keyframes: {
+        quantumMove: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(20px)' },
+        },
+      },
+    },
   },
   plugins: [],
 };

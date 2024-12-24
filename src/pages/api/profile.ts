@@ -1,60 +1,49 @@
 // src/pages/api/profile.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import dbConnect from '../lib/mongodb';
-import User, { IUser } from '../lib/models/User';
+import clientPromise from '../../lib/mongodb';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+interface ProfileUpdateResponse {
+  message?: string;
+  error?: string;
+}
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse<ProfileUpdateResponse>) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   const session = await getSession({ req });
 
-  if (!session?.user?.email) {
+  if (!session || !session.user?.email) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  await dbConnect();
+  const { name, profileImage, backgroundImage } = req.body;
 
-  const userEmail = session.user.email;
+  if (!name) {
+    return res.status(400).json({ error: 'Name is required' });
+  }
 
-  switch (req.method) {
-    case 'GET':
-      try {
-        let user: IUser | null = await User.findOne({ email: userEmail });
+  try {
+    const client = await clientPromise;
+    const db = client.db();
 
-        if (!user) {
-          // ユーザーが存在しない場合は新規作成
-          user = new User({
-            name: session.user.name,
-            email: session.user.email,
-            image: session.user.image,
-            socialLinks: {},
-          });
-          await user.save();
-        }
+    await db.collection('users').updateOne(
+      { email: session.user.email },
+      {
+        $set: {
+          name,
+          profileImage: profileImage || '',
+          backgroundImage: backgroundImage || '',
+        },
+      },
+      { upsert: true }
+    );
 
-        return res.status(200).json({ user });
-      } catch (error) {
-        console.error('Error fetching user:', error);
-        return res.status(500).json({ error: 'Error fetching user' });
-      }
-
-    case 'PUT':
-      try {
-        const { name, image, backgroundImage, socialLinks } = req.body;
-
-        const updatedUser = await User.findOneAndUpdate(
-          { email: userEmail },
-          { name, image, backgroundImage, socialLinks },
-          { new: true, upsert: true }
-        );
-
-        return res.status(200).json({ user: updatedUser });
-      } catch (error) {
-        console.error('Error updating user:', error);
-        return res.status(500).json({ error: 'Error updating user' });
-      }
-
-    default:
-      res.setHeader('Allow', ['GET', 'PUT']);
-      return res.status(405).end(`Method ${req.method} Not Allowed`);
+    return res.status(200).json({ message: 'プロフィールが更新されました' });
+  } catch (error: any) {
+    console.error('Error updating profile:', error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 }

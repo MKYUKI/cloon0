@@ -1,5 +1,5 @@
-// pages/api/chat.ts
-import type { NextApiRequest, NextApiResponse } from 'next';
+// src/pages/api/chat.ts
+import { NextApiRequest, NextApiResponse } from 'next';
 import { Configuration, OpenAIApi } from 'openai';
 
 const configuration = new Configuration({
@@ -15,25 +15,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const { prompt } = req.body;
 
-  if (!prompt) {
-    return res.status(400).json({ error: 'Prompt is required' });
-  }
-
   try {
     const completion = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt,
+      prompt: prompt,
       max_tokens: 150,
-      temperature: 0.7,
-      n: 1,
-      stop: null,
     });
 
-    const responseText = completion.data.choices[0].text?.trim();
-
-    return res.status(200).json({ result: responseText });
+    res.status(200).json({ result: completion.data.choices[0].text });
   } catch (error: any) {
-    console.error('Error with OpenAI API:', error);
-    return res.status(500).json({ error: 'Error occurred while communicating with OpenAI API' });
+    res.status(500).json({ error: error.message || 'An error occurred' });
   }
 }

@@ -1,32 +1,50 @@
 // .eslintrc.js
 module.exports = {
-    ignorePatterns: ['node_modules/**', '.next/**', 'backend/**', 'venv/**'],
-    parser: '@typescript-eslint/parser',
-    parserOptions: {
-      ecmaVersion: 2020,
-      sourceType: 'module',
-      ecmaFeatures: {
-        jsx: true,
+  root: true,
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 2022,
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+  env: {
+    browser: true,
+    node: true,
+    es2022: true,
+  },
+  overrides: [
+    {
+      files: ['src/extensions/chrome-extension/**/*.js'],
+      env: {
+        browser: true,
+      },
+      globals: {
+        chrome: 'readonly',
+      },
+      rules: {
+        'no-undef': 'off',
       },
     },
-    plugins: ['react', '@typescript-eslint'],
-    extends: [
-      'eslint:recommended',
-      'plugin:react/recommended',
-      'plugin:@typescript-eslint/recommended',
-      'next',
-      'next/core-web-vitals',
-    ],
-    rules: {
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
-    },
-    globals: {
-      chrome: 'readonly',
-    },
-  };
-  
+  ],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'next/core-web-vitals',
+  ],
+  plugins: ['react', '@typescript-eslint'],
+  rules: {
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/triple-slash-reference': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
+  },
+};

@@ -1,16 +1,11 @@
-// pages/projects.tsx
+// src/pages/projects.tsx
 import type { NextPage } from 'next';
-import { useSession } from 'next-auth/react';
-import AuthButton from '../components/AuthButton';
+// import { useSession } from 'next-auth/react'; // 未使用なので削除
+// import AuthButton from '../components/AuthButton'; // 未使用なので削除
 import Header from '../components/Header';
+import React from 'react';
 
 const ProjectsPage: NextPage = () => {
-  const { data: session, status } = useSession();
-
-  if (status === 'loading') {
-    return <div>読み込み中...</div>;
-  }
-
   return (
     <div>
       <Header />

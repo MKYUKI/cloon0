@@ -1,23 +1,12 @@
-// pages/services.tsx
-import type { NextPage } from 'next';
-import { useSession } from 'next-auth/react';
-import AuthButton from '../components/AuthButton';
-import Header from '../components/Header';
+// src/pages/services.tsx
+import React from 'react';
+// import AuthButton from '../components/AuthButton'; // 未使用なので削除
+// import { useSession } from 'next-auth/react'; // 未使用なので削除
 
-const ServicesPage: NextPage = () => {
-  const { data: session, status } = useSession();
-
-  if (status === 'loading') {
-    return <div>読み込み中...</div>;
-  }
-
+const ServicesPage: React.FC = () => {
   return (
     <div>
-      <Header />
-      <main className="main">
-        <h1>サービス</h1>
-        <p>ここにサービスの詳細を追加します。</p>
-      </main>
+      {/* サービスのコンテンツ */}
     </div>
   );
 };
