@@ -2,7 +2,7 @@
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import * as THREE from 'three';
-import { OrbitControls } from '@react-three/drei';
+import { Line, OrbitControls } from '@react-three/drei';
 
 interface LineProps {
   color: string;
@@ -14,16 +14,14 @@ const QuantumLine: React.FC<LineProps> = ({ color, speed, points }) => {
   const ref = useRef<THREE.Line>(null!);
 
   useFrame(() => {
-    ref.current.rotation.x += speed;
-    ref.current.rotation.y += speed;
+    if (ref.current) {
+      ref.current.rotation.x += speed;
+      ref.current.rotation.y += speed;
+    }
   });
 
-  const geometry = new THREE.BufferGeometry().setFromPoints(points);
-
   return (
-    <line ref={ref} geometry={geometry}>
-      <lineBasicMaterial attach="material" color={color} linewidth={2} />
-    </line>
+    <Line ref={ref} points={points} color={color} lineWidth={2} />
   );
 };
 
