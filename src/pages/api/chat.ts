@@ -9,25 +9,23 @@ const openai = new OpenAIApi(configuration);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    res.setHeader('Allow', 'POST');
+    res.status(405).end('Method Not Allowed');
+    return;
   }
 
   const { prompt } = req.body;
 
-  if (!prompt) {
-    return res.status(400).json({ error: 'Prompt is required' });
-  }
-
   try {
-    const completion = await openai.createCompletion({
+    const response = await openai.createCompletion({
       model: 'text-davinci-003',
-      prompt: prompt,
+      prompt,
       max_tokens: 150,
     });
 
-    res.status(200).json({ result: completion.data.choices[0].text });
-  } catch (error: any) {
-    console.error('OpenAI API error:', error);
-    res.status(500).json({ error: 'Failed to fetch data from OpenAI API' });
+    res.status(200).json({ result: response.data.choices[0].text });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to fetch OpenAI response' });
   }
 }

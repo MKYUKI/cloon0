@@ -11,11 +11,13 @@ interface LineProps {
 }
 
 const QuantumLine: React.FC<LineProps> = ({ color, speed, points }) => {
-  const ref = useRef<THREE.Line>(null!);
+  const ref = useRef<THREE.Line | null>(null); // 非nullアサーションを削除
 
   useFrame(() => {
-    ref.current.rotation.x += speed;
-    ref.current.rotation.y += speed;
+    if (ref.current) { // nullチェックを追加
+      ref.current.rotation.x += speed;
+      ref.current.rotation.y += speed;
+    }
   });
 
   const geometry = new THREE.BufferGeometry().setFromPoints(points);
@@ -40,28 +42,7 @@ const QuantumLines = () => {
         new THREE.Vector3(-5, -5, 0),
       ],
     },
-    {
-      color: '#00aaff',
-      speed: 0.015,
-      points: [
-        new THREE.Vector3(-5, 0, 0),
-        new THREE.Vector3(0, 5, 0),
-        new THREE.Vector3(5, 0, 0),
-        new THREE.Vector3(0, -5, 0),
-        new THREE.Vector3(-5, 0, 0),
-      ],
-    },
-    {
-      color: '#00aaff',
-      speed: 0.02,
-      points: [
-        new THREE.Vector3(0, -5, 0),
-        new THREE.Vector3(5, 5, 0),
-        new THREE.Vector3(-5, 5, 0),
-        new THREE.Vector3(0, -5, 0),
-      ],
-    },
-    // 必要に応じてラインを追加
+    // 他のライン
   ];
 
   return (
