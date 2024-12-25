@@ -32,11 +32,11 @@ const Profile: React.FC = () => {
     if (session?.user?.email) {
       fetch('/api/profile')
         .then((res) => res.json())
-        .then((data) => {
+        .then((data: { user: UserProfile }) => {
           setProfile(data.user);
           setForm(data.user);
         })
-        .catch((error) => {
+        .catch((error: Error) => {
           console.error('Error fetching profile:', error);
           setMessage('プロフィールの取得に失敗しました。');
         });
@@ -89,12 +89,12 @@ const Profile: React.FC = () => {
         });
 
         if (res.ok) {
-          const data = await res.json();
+          const data: { user: UserProfile } = await res.json();
           setProfile(data.user);
           setEditing(false);
           setMessage('プロフィールが更新されました。');
         } else {
-          const errorData = await res.json();
+          const errorData: { error?: string } = await res.json();
           setMessage(errorData.error || 'プロフィールの更新に失敗しました。');
           console.error('Failed to update profile:', errorData);
         }
