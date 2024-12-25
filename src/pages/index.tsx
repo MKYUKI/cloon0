@@ -1,10 +1,10 @@
 // src/pages/index.tsx
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import ParticlesBackground from '../components/Particles';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState } from 'react';
 import Image from 'next/image';
+import QuantumLines from '@/components/QuantumLines';
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
@@ -39,23 +39,25 @@ const Home: NextPage = () => {
 
   return (
     <div className="relative min-h-screen bg-white text-black">
-      <ParticlesBackground />
+      {/* QuantumLines を背景として使用 */}
+      <QuantumLines />
+
       <Head>
-        <title>ULTIMAへようこそ</title>
+        <title>ようこそ</title>
         <meta name="description" content="ULTIMA Next-Gen Platform" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center">
-        <h1 className="text-4xl font-bold mb-4">ULTIMAへようこそ</h1>
+        <h1 className="text-4xl font-bold mb-4">ようこそ</h1>
         {session ? (
           <div className="flex flex-col items-center mb-4">
             {session.user?.image && (
               <Image
                 src={session.user.image}
                 alt="プロフィール画像"
-                width={96} // 24 * 4 (Tailwind CSS の w-24 相当)
-                height={96} // 24 * 4
+                width={96}
+                height={96}
                 className="rounded-full mb-4"
               />
             )}

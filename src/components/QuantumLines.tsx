@@ -11,13 +11,11 @@ interface LineProps {
 }
 
 const QuantumLine: React.FC<LineProps> = ({ color, speed, points }) => {
-  const ref = useRef<THREE.Line | null>(null); // 非nullアサーションを削除
+  const ref = useRef<THREE.Line>(null!);
 
   useFrame(() => {
-    if (ref.current) { // nullチェックを追加
-      ref.current.rotation.x += speed;
-      ref.current.rotation.y += speed;
-    }
+    ref.current.rotation.x += speed;
+    ref.current.rotation.y += speed;
   });
 
   const geometry = new THREE.BufferGeometry().setFromPoints(points);
@@ -32,7 +30,7 @@ const QuantumLine: React.FC<LineProps> = ({ color, speed, points }) => {
 const QuantumLines = () => {
   const lines = [
     {
-      color: '#00aaff',
+      color: '#00aaff', // 明るい青
       speed: 0.01,
       points: [
         new THREE.Vector3(-5, -5, 0),
@@ -42,7 +40,27 @@ const QuantumLines = () => {
         new THREE.Vector3(-5, -5, 0),
       ],
     },
-    // 他のライン
+    {
+      color: '#00aaff',
+      speed: 0.015,
+      points: [
+        new THREE.Vector3(-5, 0, 0),
+        new THREE.Vector3(0, 5, 0),
+        new THREE.Vector3(5, 0, 0),
+        new THREE.Vector3(0, -5, 0),
+        new THREE.Vector3(-5, 0, 0),
+      ],
+    },
+    {
+      color: '#00aaff',
+      speed: 0.02,
+      points: [
+        new THREE.Vector3(0, -5, 0),
+        new THREE.Vector3(5, 5, 0),
+        new THREE.Vector3(-5, 5, 0),
+        new THREE.Vector3(0, -5, 0),
+      ],
+    },
   ];
 
   return (
@@ -50,11 +68,16 @@ const QuantumLines = () => {
       style={{ position: 'fixed', top: 0, left: 0, zIndex: -1 }}
       camera={{ position: [0, 0, 20], fov: 75 }}
     >
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={0.4} />
       <pointLight position={[10, 10, 10]} />
       <OrbitControls enableZoom={false} />
       {lines.map((line, index) => (
-        <QuantumLine key={index} color={line.color} speed={line.speed} points={line.points} />
+        <QuantumLine
+          key={index}
+          color={line.color}
+          speed={line.speed}
+          points={line.points}
+        />
       ))}
     </Canvas>
   );

@@ -15,7 +15,7 @@
     "@tsparticles/react": "^3.0.0",
     "autoprefixer": "^10.4.20",
     "mongodb": "5.9.2",
-    "next": "^13.4.12",
+    "next": "^13.5.8",
     "next-auth": "^4.24.11",
     "openai": "^4.77.0",
     "postcss": "^8.4.49",
@@ -25,18 +25,18 @@
     "three": "^0.171.0"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.287",
-    "@types/node": "^22.10.2",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "18.2.0",
-    "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
-    "eslint": "^8.57.1",
-    "eslint-config-next": "13.4.12",
-    "eslint-plugin-react": "^7.37.3",
-    "eslint-plugin-react-hooks": "4.6.0",
-    "typescript": "5.7.2"
-  },
+  "@types/chrome": "^0.0.287",
+  "@types/node": "^22.10.2",
+  "@types/react": "^18.3.18",
+  "@types/react-dom": "18.2.0",
+  "@typescript-eslint/eslint-plugin": "^5.62.0",
+  "@typescript-eslint/parser": "^5.62.0",
+  "eslint": "^8.57.1",
+  "eslint-config-next": "15.1.2",
+  "eslint-plugin-react": "^7.37.3",
+  "eslint-plugin-react-hooks": "5.1.0",
+  "typescript": "5.7.2"
+},
   "pnpm": {
     "overrides": {
       "typescript": "5.7.2"
