@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState } from 'react';
 import Image from 'next/image';
-import QuantumLines from '@/components/QuantumLines';
+import QuantumLines from '@/components/QuantumLines'; // 正しくインポート
 
 const Home: NextPage = () => {
   const { data: session } = useSession();

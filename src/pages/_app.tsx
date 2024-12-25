@@ -1,13 +1,13 @@
 // src/pages/_app.tsx
+import { SessionProvider } from "next-auth/react";
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import ErrorBoundary from '@/components/ErrorBoundary';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <ErrorBoundary>
+    <SessionProvider session={session}>
       <Component {...pageProps} />
-    </ErrorBoundary>
+    </SessionProvider>
   );
 }
 
