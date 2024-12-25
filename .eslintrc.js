@@ -1,26 +1,16 @@
-// .eslintrc.js
 module.exports = {
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 2020,
-    sourceType: 'module',
-  },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
+  // 既存の設定
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
     'next/core-web-vitals',
   ],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'prettier'],
   rules: {
-    '@typescript-eslint/no-unused-vars': 'warn',
-    '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/ban-ts-comment': 'off',
+    'prettier/prettier': 'error',
+    // 既存のルール
   },
-  settings: {
-    react: {
-      version: 'detect',
-    },
-  },
+  // その他の設定
 };
