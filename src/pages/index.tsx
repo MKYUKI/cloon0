@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState } from 'react';
 import Image from 'next/image';
-import QuantumLines from '@/components/QuantumLines'; // 正しくインポート
+import QuantumLines from '@/components/QuantumLines';
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
@@ -39,7 +39,6 @@ const Home: NextPage = () => {
 
   return (
     <div className="relative min-h-screen bg-white text-black">
-      {/* QuantumLines を背景として使用 */}
       <QuantumLines />
 
       <Head>
@@ -78,7 +77,6 @@ const Home: NextPage = () => {
           </button>
         )}
 
-        {/* チャットフォーム */}
         <form onSubmit={handleSubmit} className="flex flex-col items-center">
           <textarea
             value={prompt}
@@ -92,7 +90,6 @@ const Home: NextPage = () => {
           </button>
         </form>
 
-        {/* レスポンス表示 */}
         {response && (
           <div className="mt-4 p-4 bg-gray-100 rounded shadow w-80 text-left">
             <p><strong>GPTの返答:</strong></p>
@@ -100,7 +97,6 @@ const Home: NextPage = () => {
           </div>
         )}
 
-        {/* エラー表示 */}
         {error && (
           <div className="mt-4 p-4 bg-red-100 rounded shadow w-80 text-left">
             <p><strong>エラー:</strong> {error}</p>

@@ -28,7 +28,7 @@ const QuantumLine: React.FC<LineProps> = ({ color, speed, points }) => {
 const QuantumLines = () => {
   const lines = [
     {
-      color: '#00aaff', // 明るい青
+      color: '#00aaff',
       speed: 0.01,
       points: [
         new THREE.Vector3(-5, -5, 0),

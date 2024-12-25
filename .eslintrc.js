@@ -5,7 +5,7 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'react'],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
@@ -13,9 +13,9 @@ module.exports = {
     'next/core-web-vitals',
   ],
   rules: {
-    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/ban-ts-comment': 'off',
   },
   settings: {
