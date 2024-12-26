@@ -1,20 +1,19 @@
 {
-    "version": 2,
-    "builds": [
-      { "src": "next.config.js", "use": "@vercel/next" },
-      { "src": "backend/api.py", "use": "@vercel/python" },
-      { "src": "backend/sendMail.py", "use": "@vercel/python" },
-      { "src": "app.py", "use": "@vercel/python" }
-    ],
-    "routes": [
-      { "src": "/api/singularity", "dest": "/backend/api.py" },
-      { "src": "/api/contact", "dest": "/backend/sendMail.py" },
-      { "src": "/api/store", "dest": "/backend/api.py" },
-      { "src": "/api/process", "dest": "/backend/api.py" },
-      { "src": "/contact", "dest": "/pages/contact.astro" },
-      { "src": "/store", "dest": "/pages/store.astro" },
-      { "src": "/about", "dest": "/pages/about.astro" },
-      { "src": "/(.*)", "dest": "/$1" }
-    ]
-  }
-  
+  "version": 2,
+  "builds": [
+    { "src": "next.config.js", "use": "@vercel/next" },
+    { "src": "backend/api.py", "use": "@vercel/python" },
+    { "src": "backend/sendMail.py", "use": "@vercel/python" },
+    { "src": "app.py", "use": "@vercel/python" }
+  ],
+  "routes": [
+    { "src": "/api/singularity", "dest": "/backend/api.py" },
+    { "src": "/api/contact", "dest": "/backend/sendMail.py" },
+    { "src": "/api/store", "dest": "/backend/api.py" },
+    { "src": "/api/process", "dest": "/backend/api.py" },
+    { "src": "/contact", "dest": "/pages/contact.astro" },
+    { "src": "/store", "dest": "/pages/store.astro" },
+    { "src": "/about", "dest": "/pages/about.astro" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}

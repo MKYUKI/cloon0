@@ -1,4 +1,4 @@
-// models/User.ts
+// src/lib/models/User.ts
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IUser extends Document {

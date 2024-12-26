@@ -1,38 +1,30 @@
 // src/lib/mongodb.ts
-import { MongoClient, ServerApiVersion } from 'mongodb';
+import { MongoClient } from 'mongodb';
 
-const uri = process.env.MONGODB_URI;
-
-if (!uri) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
-}
-
-const options = {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-};
-
-// グローバル変数の宣言（開発環境でのホットリロード対策）
-declare global {
-  // eslint-disable-next-line no-var
-  var _mongoClientPromise: Promise<MongoClient> | undefined;
-}
+const uri = process.env.MONGODB_URI || '';
+const options = {};
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
+if (!process.env.MONGODB_URI) {
+  throw new Error('Please add your Mongo URI to .env.local');
+}
+
+// 開発環境での型拡張
+declare global {
+  var _mongoClientPromise: Promise<MongoClient> | undefined;
+}
+
 if (process.env.NODE_ENV === 'development') {
-  // 開発環境ではグローバル変数を使用
+  // 開発環境ではグローバル変数を使用してクライアントを再利用
   if (!global._mongoClientPromise) {
     client = new MongoClient(uri, options);
     global._mongoClientPromise = client.connect();
   }
   clientPromise = global._mongoClientPromise;
 } else {
-  // 本番環境ではグローバル変数を使用しない
+  // 本番環境では新しいクライアントを作成
   client = new MongoClient(uri, options);
   clientPromise = client.connect();
 }

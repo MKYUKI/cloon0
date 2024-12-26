@@ -43,20 +43,17 @@ const Profile: React.FC = () => {
     }
   }, [session]);
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setForm((prevForm) =>
-        prevForm
-          ? {
-              ...prevForm,
-              [name]: value,
-            }
-          : prevForm
-      );
-    },
-    []
-  );
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prevForm) =>
+      prevForm
+        ? {
+            ...prevForm,
+            [name]: value,
+          }
+        : prevForm
+    );
+  }, []);
 
   const handleSocialChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,37 +125,65 @@ const Profile: React.FC = () => {
         <p>{profile.email}</p>
         <div className="social-links">
           {profile.socialLinks.github && (
-            <a href={profile.socialLinks.github} target="_blank" rel="noopener noreferrer">
+            <a
+              href={profile.socialLinks.github}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               GitHub
             </a>
           )}
           {profile.socialLinks.youtube && (
-            <a href={profile.socialLinks.youtube} target="_blank" rel="noopener noreferrer">
+            <a
+              href={profile.socialLinks.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               YouTube
             </a>
           )}
           {profile.socialLinks.twitter && (
-            <a href={profile.socialLinks.twitter} target="_blank" rel="noopener noreferrer">
+            <a
+              href={profile.socialLinks.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Twitter
             </a>
           )}
           {profile.socialLinks.facebook && (
-            <a href={profile.socialLinks.facebook} target="_blank" rel="noopener noreferrer">
+            <a
+              href={profile.socialLinks.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Facebook
             </a>
           )}
           {profile.socialLinks.paypal && (
-            <a href={profile.socialLinks.paypal} target="_blank" rel="noopener noreferrer">
+            <a
+              href={profile.socialLinks.paypal}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               PayPal
             </a>
           )}
           {profile.socialLinks.amazonJP && (
-            <a href={profile.socialLinks.amazonJP} target="_blank" rel="noopener noreferrer">
+            <a
+              href={profile.socialLinks.amazonJP}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Amazon JP
             </a>
           )}
           {profile.socialLinks.amazonUS && (
-            <a href={profile.socialLinks.amazonUS} target="_blank" rel="noopener noreferrer">
+            <a
+              href={profile.socialLinks.amazonUS}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Amazon US
             </a>
           )}

@@ -37,7 +37,10 @@ const Profile: React.FC = () => {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <p>ログインしてください。</p>
-        <button onClick={() => signIn()} className="px-4 py-2 bg-blue-500 text-white rounded mt-4">
+        <button
+          onClick={() => signIn()}
+          className="px-4 py-2 bg-blue-500 text-white rounded mt-4"
+        >
           ログイン
         </button>
       </div>
@@ -47,7 +50,10 @@ const Profile: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <h1 className="text-2xl font-bold mb-4">プロフィール編集</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col items-start bg-white p-6 rounded shadow-md">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col items-start bg-white p-6 rounded shadow-md"
+      >
         <label className="mb-2">
           アカウントネーム:
           <input
@@ -76,12 +82,18 @@ const Profile: React.FC = () => {
             className="ml-2 p-1 border rounded"
           />
         </label>
-        <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded mt-4">
+        <button
+          type="submit"
+          className="px-4 py-2 bg-blue-500 text-white rounded mt-4"
+        >
           更新
         </button>
       </form>
       {message && <p className="mt-4 text-green-500">{message}</p>}
-      <button onClick={() => signOut()} className="mt-4 px-4 py-2 bg-red-500 text-white rounded">
+      <button
+        onClick={() => signOut()}
+        className="mt-4 px-4 py-2 bg-red-500 text-white rounded"
+      >
         ログアウト
       </button>
     </div>

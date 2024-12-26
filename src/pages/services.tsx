@@ -4,11 +4,7 @@ import React from 'react';
 // import { useSession } from 'next-auth/react'; // 未使用なので削除
 
 const ServicesPage: React.FC = () => {
-  return (
-    <div>
-      {/* サービスのコンテンツ */}
-    </div>
-  );
+  return <div>{/* サービスのコンテンツ */}</div>;
 };
 
 export default ServicesPage;

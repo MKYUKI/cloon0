@@ -5,7 +5,10 @@ type Data = {
   result: string;
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST']);
     return res.status(405).json({ result: `Method ${req.method} Not Allowed` });
@@ -28,6 +31,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return res.status(response.status).json({ result: data.result });
   } catch (error) {
     console.error('Error connecting to backend:', error);
-    return res.status(500).json({ result: '内部サーバーエラーが発生しました。' });
+    return res
+      .status(500)
+      .json({ result: '内部サーバーエラーが発生しました。' });
   }
 }

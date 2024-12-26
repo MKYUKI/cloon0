@@ -1,5 +1,16 @@
+// .eslintrc.js
 module.exports = {
-  // 既存の設定
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module',
+  },
+  plugins: [
+    '@typescript-eslint',
+    'react',
+    'react-hooks',
+    'prettier',
+  ],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
@@ -7,10 +18,14 @@ module.exports = {
     'plugin:prettier/recommended',
     'next/core-web-vitals',
   ],
-  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
-    // 既存のルール
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
   },
-  // その他の設定
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
 };

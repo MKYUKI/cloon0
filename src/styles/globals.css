@@ -29,7 +29,7 @@ body {
 
 /* 動的背景 */
 body::before {
-  content: "";
+  content: '';
   position: fixed;
   inset: 0;
   background: #ffffff;
@@ -37,18 +37,23 @@ body::before {
 }
 
 body::after {
-  content: "";
+  content: '';
   position: fixed;
   inset: 0;
-  background: url('data:image/svg+xml,<svg width="2000" height="2000" xmlns="http://www.w3.org/2000/svg"><path d="M0 100 C 500 0 500 200 1000 100 C 1500 0 1500 200 2000 100" stroke=\\"#00aaff\\" fill=\\"transparent\\" stroke-width=\\"2\\"/><path d="M0 300 C 500 200 500 400 1000 300 C 1500 200 1500 400 2000 300\\" stroke=\\"#00aaff\\" fill=\\"transparent\\" stroke-width=\\"2\\"/></svg>') repeat;
+  background: url('data:image/svg+xml,<svg width="2000" height="2000" xmlns="http://www.w3.org/2000/svg"><path d="M0 100 C 500 0 500 200 1000 100 C 1500 0 1500 200 2000 100" stroke=\\"#00aaff\\" fill=\\"transparent\\" stroke-width=\\"2\\"/><path d="M0 300 C 500 200 500 400 1000 300 C 1500 200 1500 400 2000 300\\" stroke=\\"#00aaff\\" fill=\\"transparent\\" stroke-width=\\"2\\"/></svg>')
+    repeat;
   opacity: 0.3;
   animation: moveBg 5s linear infinite alternate;
   z-index: -1;
 }
 
 @keyframes moveBg {
-  0% { background-position: 0 0; }
-  100% { background-position: 0 200px; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 200px;
+  }
 }
 
 /* ヘッダー */

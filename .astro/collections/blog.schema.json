@@ -52,12 +52,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "title",
-        "description",
-        "pubDate",
-        "slug"
-      ],
+      "required": ["title", "description", "pubDate", "slug"],
       "additionalProperties": false
     }
   },

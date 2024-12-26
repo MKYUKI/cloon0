@@ -85,21 +85,28 @@ const Home: NextPage = () => {
             className="w-80 h-32 p-2 border border-gray-300 rounded mb-4"
             required
           />
-          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded"
+          >
             送信
           </button>
         </form>
 
         {response && (
           <div className="mt-4 p-4 bg-gray-100 rounded shadow w-80 text-left">
-            <p><strong>GPTの返答:</strong></p>
+            <p>
+              <strong>GPTの返答:</strong>
+            </p>
             <p>{response}</p>
           </div>
         )}
 
         {error && (
           <div className="mt-4 p-4 bg-red-100 rounded shadow w-80 text-left">
-            <p><strong>エラー:</strong> {error}</p>
+            <p>
+              <strong>エラー:</strong> {error}
+            </p>
           </div>
         )}
       </main>

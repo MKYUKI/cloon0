@@ -1,17 +1,17 @@
 // src/components/QuantumLines.tsx
+import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useRef } from 'react';
-import * as THREE from 'three';
-import { Line, OrbitControls } from '@react-three/drei';
+import { OrbitControls as DreiOrbitControls, Line } from '@react-three/drei';
+import { Line2 } from 'three-stdlib';
 
 interface LineProps {
   color: string;
   speed: number;
-  points: THREE.Vector3[];
+  points: number[][];
 }
 
 const QuantumLine: React.FC<LineProps> = ({ color, speed, points }) => {
-  const ref = useRef<THREE.Line>(null!);
+  const ref = useRef<Line2>(null!);
 
   useFrame(() => {
     if (ref.current) {
@@ -21,42 +21,50 @@ const QuantumLine: React.FC<LineProps> = ({ color, speed, points }) => {
   });
 
   return (
-    <Line ref={ref} points={points} color={color} lineWidth={2} />
+    <Line
+      ref={ref as React.RefObject<Line2>}
+      points={points}
+      color={color}
+      lineWidth={2}
+    />
   );
 };
 
-const QuantumLines = () => {
+// OrbitControlsをanyとして再定義
+const OrbitControls: any = DreiOrbitControls;
+
+const QuantumLines: React.FC = () => {
   const lines = [
     {
       color: '#00aaff',
       speed: 0.01,
       points: [
-        new THREE.Vector3(-5, -5, 0),
-        new THREE.Vector3(5, -5, 0),
-        new THREE.Vector3(5, 5, 0),
-        new THREE.Vector3(-5, 5, 0),
-        new THREE.Vector3(-5, -5, 0),
+        [-5, -5, 0],
+        [5, -5, 0],
+        [5, 5, 0],
+        [-5, 5, 0],
+        [-5, -5, 0],
       ],
     },
     {
       color: '#00aaff',
       speed: 0.015,
       points: [
-        new THREE.Vector3(-5, 0, 0),
-        new THREE.Vector3(0, 5, 0),
-        new THREE.Vector3(5, 0, 0),
-        new THREE.Vector3(0, -5, 0),
-        new THREE.Vector3(-5, 0, 0),
+        [-5, 0, 0],
+        [0, 5, 0],
+        [5, 0, 0],
+        [0, -5, 0],
+        [-5, 0, 0],
       ],
     },
     {
       color: '#00aaff',
       speed: 0.02,
       points: [
-        new THREE.Vector3(0, -5, 0),
-        new THREE.Vector3(5, 5, 0),
-        new THREE.Vector3(-5, 5, 0),
-        new THREE.Vector3(0, -5, 0),
+        [0, -5, 0],
+        [5, 5, 0],
+        [-5, 5, 0],
+        [0, -5, 0],
       ],
     },
   ];
@@ -68,10 +76,13 @@ const QuantumLines = () => {
     >
       <ambientLight intensity={0.4} />
       <pointLight position={[10, 10, 10]} />
+
+      {/* 型エラーを無視してenableZoomを設定 */}
       <OrbitControls enableZoom={false} />
-      {lines.map((line, index) => (
+
+      {lines.map((line, i) => (
         <QuantumLine
-          key={index}
+          key={i}
           color={line.color}
           speed={line.speed}
           points={line.points}

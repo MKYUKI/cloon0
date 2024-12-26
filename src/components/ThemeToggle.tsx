@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 const ThemeToggle: React.FC = () => {
-  const [theme, setTheme] = useState<'light'|'dark'>('light');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
     const stored = localStorage.getItem('theme');
@@ -20,7 +20,7 @@ const ThemeToggle: React.FC = () => {
     }
     localStorage.setItem('theme', newTheme);
     setTheme(newTheme);
-  }
+  };
 
   return (
     <button
@@ -31,6 +31,6 @@ const ThemeToggle: React.FC = () => {
       {theme === 'light' ? '🌙' : '☀️'}
     </button>
   );
-}
+};
 
 export default ThemeToggle;

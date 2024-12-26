@@ -1,36 +1,36 @@
 import React, { useState } from 'react';
 
-type Msg = { role:'user'|'assistant', content:string };
+type Msg = { role: 'user' | 'assistant'; content: string };
 
 const ChatUI: React.FC = () => {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState('');
 
-  const sendMessage = async() => {
-    if(!input.trim()) return;
-    const userMsg = { role:'user' as const, content:input.trim() };
+  const sendMessage = async () => {
+    if (!input.trim()) return;
+    const userMsg = { role: 'user' as const, content: input.trim() };
     const newMsgs = [...messages, userMsg];
     setMessages(newMsgs);
     setInput('');
 
     try {
       const res = await fetch('/api/chat', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({messages:newMsgs})
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: newMsgs }),
       });
-      if(!res.ok) {
+      if (!res.ok) {
         console.error(await res.text());
         return;
       }
       const data = await res.json();
-      if(data && data.role==='assistant') {
-        setMessages(prev => [...prev, data]);
+      if (data && data.role === 'assistant') {
+        setMessages((prev) => [...prev, data]);
       }
-    } catch(e) {
+    } catch (e) {
       console.error(e);
     }
-  }
+  };
 
   return (
     <div className="flex flex-col h-[80vh] border border-gray-300 dark:border-gray-600 rounded shadow p-4">
@@ -45,14 +45,27 @@ const ChatUI: React.FC = () => {
               </linearGradient>
             </defs>
             {/* シンプルなパターン線を量子的・幾何学的にイメージ */}
-            <path d="M0,50 C150,200 350,0 500,100 L600,50" stroke="url(#grad)" strokeWidth="2" fill="none"/>
-            <path d="M0,150 C100,0 300,200 500,50 L600,150" stroke="url(#grad)" strokeWidth="2" fill="none"/>
+            <path
+              d="M0,50 C150,200 350,0 500,100 L600,50"
+              stroke="url(#grad)"
+              strokeWidth="2"
+              fill="none"
+            />
+            <path
+              d="M0,150 C100,0 300,200 500,50 L600,150"
+              stroke="url(#grad)"
+              strokeWidth="2"
+              fill="none"
+            />
           </svg>
         </div>
         <div className="relative z-10 p-2 space-y-2">
-          {messages.map((m,i)=>(
-            <div key={i} className={`p-2 rounded ${m.role==='user' ? 'bg-blue-100 text-black' : 'bg-gray-200 text-black'}`}>
-              <strong>{m.role==='user'? 'You:' : 'GPT:'}</strong> {m.content}
+          {messages.map((m, i) => (
+            <div
+              key={i}
+              className={`p-2 rounded ${m.role === 'user' ? 'bg-blue-100 text-black' : 'bg-gray-200 text-black'}`}
+            >
+              <strong>{m.role === 'user' ? 'You:' : 'GPT:'}</strong> {m.content}
             </div>
           ))}
         </div>
@@ -62,15 +75,20 @@ const ChatUI: React.FC = () => {
           className="flex-grow border border-gray-300 p-2 rounded-l dark:bg-gray-800 dark:text-white"
           placeholder="メッセージを入力..."
           value={input}
-          onChange={e=>setInput(e.target.value)}
-          onKeyDown={e=>{if(e.key==='Enter')sendMessage();}}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') sendMessage();
+          }}
         />
-        <button onClick={sendMessage} className="px-4 bg-blue-600 text-white rounded-r">
+        <button
+          onClick={sendMessage}
+          className="px-4 bg-blue-600 text-white rounded-r"
+        >
           送信
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default ChatUI;
