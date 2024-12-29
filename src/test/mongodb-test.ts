@@ -1,18 +1,16 @@
 // src/test/mongodb-test.ts
-import { MongoClient } from 'mongodb';
+import clientPromise from '../lib/mongodb';
 
-const uri = process.env.MONGODB_URI as string;
-
-const client = new MongoClient(uri);
-
-const testConnection = async () => {
+async function testConnection() {
   try {
-    await client.connect();
-    console.log('Connected to MongoDB Atlas successfully');
-    await client.close();
+    const client = await clientPromise;
+    const db = client.db();
+    console.log('Connected to MongoDB successfully');
+    process.exit(0);
   } catch (error) {
-    console.error('Failed to connect to MongoDB Atlas', error);
+    console.error('MongoDB connection error:', error);
+    process.exit(1);
   }
-};
+}
 
 testConnection();

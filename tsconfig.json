@@ -20,6 +20,11 @@
     },
     "allowJs": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/types/next-auth.d.ts"
+  ],
   "exclude": ["node_modules"]
 }

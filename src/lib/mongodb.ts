@@ -11,7 +11,7 @@ if (!process.env.MONGODB_URI) {
   throw new Error('Please add your Mongo URI to .env.local');
 }
 
-// 開発環境での型拡張
+// グローバルスコープでのキャッシュ
 declare global {
   var _mongoClientPromise: Promise<MongoClient> | undefined;
 }

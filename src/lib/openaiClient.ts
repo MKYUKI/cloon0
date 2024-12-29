@@ -7,8 +7,10 @@ if (!process.env.OPENAI_API_KEY) {
   );
 }
 
-const openai = new OpenAI({
+const configuration = new OpenAI.Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+const openai = new OpenAI.OpenAIApi(configuration);
 
 export { openai };

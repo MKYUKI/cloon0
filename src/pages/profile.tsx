@@ -1,103 +1,145 @@
 // src/pages/profile.tsx
-import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useSession, signIn, signOut } from 'next-auth/react';
+import type { GetServerSideProps } from 'next';
+import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import QuantumLines from '@/components/QuantumLines';
 
-const Profile: React.FC = () => {
-  const { data: session } = useSession();
-  const [name, setName] = useState('');
-  const [profileImage, setProfileImage] = useState('');
-  const [backgroundImage, setBackgroundImage] = useState('');
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  image: string;
+  profileImage?: string;
+  backgroundImage?: string;
+}
+
+export default function Profile({ user }: { user: User }) {
+  const { data: session, status } = useSession();
+  const loading = status === 'loading';
+  const [isEditing, setIsEditing] = useState(false);
+  const [name, setName] = useState(user.name);
+  const [profileImage, setProfileImage] = useState(user.profileImage || '');
+  const [backgroundImage, setBackgroundImage] = useState(user.backgroundImage || '');
   const [message, setMessage] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
-    if (session?.user) {
-      setName(session.user.name || '');
-      setProfileImage(session.user.image || '');
-      // 背景画像はカスタムフィールドとして設定
-      // 必要に応じてfetchProfile関数を実装
+    if (!loading && !session) {
+      signIn('google');
     }
-  }, [session]);
+  }, [loading, session]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleSave = async () => {
     try {
-      const res = await axios.post('/api/profile', {
-        name,
-        profileImage,
-        backgroundImage,
+      const response = await fetch('/api/profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, profileImage, backgroundImage }),
       });
-      setMessage(res.data.message);
-    } catch (error: any) {
-      setMessage(error.response?.data?.error || 'エラーが発生しました');
+
+      if (response.ok) {
+        setMessage('プロフィールが更新されました');
+        setIsEditing(false);
+        router.reload(); // ページをリロードして更新を反映
+      } else {
+        const data = await response.json();
+        setMessage(data.error || '更新に失敗しました');
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      setMessage('更新に失敗しました');
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   if (!session) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <p>ログインしてください。</p>
-        <button
-          onClick={() => signIn()}
-          className="px-4 py-2 bg-blue-500 text-white rounded mt-4"
-        >
-          ログイン
-        </button>
-      </div>
-    );
+    return <div>Please sign in.</div>;
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold mb-4">プロフィール編集</h1>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col items-start bg-white p-6 rounded shadow-md"
-      >
-        <label className="mb-2">
-          アカウントネーム:
+    <div className="profile-container dark:bg-gray-800 dark:text-white p-4">
+      <div className="background-image" style={{ backgroundImage: `url(${backgroundImage})` }}>
+        {!backgroundImage && <div className="h-48 bg-gray-400 rounded"></div>}
+      </div>
+      <img src={profileImage || session.user?.image || ''} alt="Profile" className="profile-image" />
+
+      <h1 className="text-2xl font-bold">{name}</h1>
+      <p className="text-gray-600 dark:text-gray-400">{session.user?.email}</p>
+
+      {isEditing ? (
+        <div className="edit-form">
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="ml-2 p-1 border rounded"
-            required
+            placeholder="名前"
+            className="mt-2 p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           />
-        </label>
-        <label className="mb-2">
-          プロフィール画像URL:
           <input
-            type="url"
+            type="text"
             value={profileImage}
             onChange={(e) => setProfileImage(e.target.value)}
-            className="ml-2 p-1 border rounded"
+            placeholder="プロフィール画像URL"
+            className="mt-2 p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           />
-        </label>
-        <label className="mb-2">
-          背景画像URL:
           <input
-            type="url"
+            type="text"
             value={backgroundImage}
             onChange={(e) => setBackgroundImage(e.target.value)}
-            className="ml-2 p-1 border rounded"
+            placeholder="背景画像URL"
+            className="mt-2 p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           />
-        </label>
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded mt-4"
-        >
-          更新
-        </button>
-      </form>
-      {message && <p className="mt-4 text-green-500">{message}</p>}
-      <button
-        onClick={() => signOut()}
-        className="mt-4 px-4 py-2 bg-red-500 text-white rounded"
-      >
-        ログアウト
-      </button>
+          <button onClick={handleSave} className="save-button">保存</button>
+          {message && <p className="message">{message}</p>}
+        </div>
+      ) : (
+        <button onClick={handleEdit} className="edit-button">プロフィールを編集</button>
+      )}
+
+      <button onClick={() => signOut()} className="logout-button mt-4">ログアウト</button>
+      <QuantumLines />
     </div>
   );
-};
+}
 
-export default Profile;
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context);
+
+  if (!session || !session.user?.email) {
+    return {
+      redirect: {
+        destination: '/api/auth/signin',
+        permanent: false,
+      },
+    };
+  }
+
+  const client = await clientPromise;
+  const db = client.db();
+
+  const user = await db.collection('users').findOne<User>({ email: session.user.email });
+
+  return {
+    props: {
+      user: {
+        id: user?._id.toString() || '',
+        name: user?.name || '',
+        email: user?.email || '',
+        image: user?.image || '',
+        profileImage: user?.profileImage || null,
+        backgroundImage: user?.backgroundImage || null,
+      },
+    },
+  };
+};

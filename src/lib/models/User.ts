@@ -5,7 +5,8 @@ export interface IUser extends Document {
   name: string;
   email: string;
   image: string;
-  backgroundImage?: string;
+  profileImage?: string; // 追加: プロフィール画像
+  backgroundImage?: string; // 追加: 背景画像
   socialLinks: {
     github?: string;
     youtube?: string;
@@ -21,7 +22,8 @@ const UserSchema: Schema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   image: { type: String, required: true },
-  backgroundImage: { type: String },
+  profileImage: { type: String }, // 追加: プロフィール画像のフィールド
+  backgroundImage: { type: String }, // 追加: 背景画像のフィールド
   socialLinks: {
     github: { type: String },
     youtube: { type: String },

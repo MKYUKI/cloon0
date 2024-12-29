@@ -2,23 +2,22 @@
 import { useState } from 'react';
 
 const ChatBox = () => {
-  const [input, setInput] = useState('');
+  const [prompt, setPrompt] = useState('');
   const [response, setResponse] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!input.trim()) return;
-
-    setLoading(true);
+    setError('');
     setResponse('');
 
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: input }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt }),
       });
 
       const data = await res.json();
@@ -26,37 +25,28 @@ const ChatBox = () => {
       if (res.ok) {
         setResponse(data.result);
       } else {
-        setResponse(data.error || 'エラーが発生しました');
+        setError(data.error || 'エラーが発生しました');
       }
-    } catch (error) {
-      setResponse('予期せぬエラーが発生しました');
-      console.error('Error:', error);
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      console.error('Error fetching chat response:', err);
+      setError('エラーが発生しました');
     }
   };
 
   return (
-    <div className="chat-box">
+    <div className="chatbox-container">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="質問を入力してください..."
-          className="input-field"
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          placeholder="チャットメッセージを入力..."
           required
         />
-        <button type="submit" disabled={loading} className="submit-button">
-          {loading ? '送信中...' : '送信'}
-        </button>
+        <button type="submit">送信</button>
       </form>
-      {response && (
-        <div className="response">
-          <h3>GPTの返答:</h3>
-          <p>{response}</p>
-        </div>
-      )}
+      {response && <div className="response">{response}</div>}
+      {error && <div className="error">{error}</div>}
     </div>
   );
 };
