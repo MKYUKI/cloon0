@@ -1,5 +1,5 @@
 // src/lib/openaiClient.ts
-import { Configuration, OpenAIApi } from 'openai';
+import OpenAI from 'openai';
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error(
@@ -7,10 +7,8 @@ if (!process.env.OPENAI_API_KEY) {
   );
 }
 
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-
-const openai = new OpenAIApi(configuration);
 
 export { openai };
