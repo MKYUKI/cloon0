@@ -30,8 +30,8 @@ const QuantumLine: React.FC<LineProps> = ({ color, speed, points }) => {
   );
 };
 
-// OrbitControlsをanyとして再定義
-const OrbitControls: any = DreiOrbitControls;
+// 型を明確に定義
+const OrbitControls: React.FC<any> = DreiOrbitControls;
 
 const QuantumLines: React.FC = () => {
   const lines = [
@@ -77,7 +77,7 @@ const QuantumLines: React.FC = () => {
       <ambientLight intensity={0.4} />
       <pointLight position={[10, 10, 10]} />
 
-      {/* 型エラーを無視してenableZoomを設定 */}
+      {/* 型エラーを無視して enableZoom を設定 */}
       <OrbitControls enableZoom={false} />
 
       {lines.map((line, i) => (

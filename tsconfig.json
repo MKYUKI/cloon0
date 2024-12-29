@@ -3,12 +3,11 @@
     "target": "ES6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "skipLibCheck": true,
-    "strict": true, // ここが true になっていることを確認
+    "strict": true,
     "noEmit": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    // "typeRoots": ["./types", "./node_modules/@types"],
     "module": "esnext",
     "moduleResolution": "node",
     "jsx": "preserve",
