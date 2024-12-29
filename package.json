@@ -15,7 +15,7 @@
     "@tsparticles/react": "^3.0.0",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.9",
-    "mongodb": "^5.9.2",
+    "mongodb": "^6.12.0",
     "mongoose": "^8.9.2",
     "next": "13.5.8",
     "next-auth": "^4.24.11",

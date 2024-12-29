@@ -18,7 +18,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     res.status(200).json({ result: response.choices[0].message.content });
   } catch (error: any) {
-    console.error('OpenAI API Error:', error.response?.data || error.message || error);
-    res.status(500).json({ error: error.message || 'Something went wrong' });
+    console.error('OpenAI API Error:', error); // すべてのエラー情報をログ出力
+    if (error.response) {
+      console.error(error.response.status);
+      console.error(error.response.data);
+    } else {
+      console.error(error.message);
+    }
+    res.status(500).json({ error: 'Error communicating with OpenAI' });
   }
 }
