@@ -1,10 +1,12 @@
-// src/pages/profile.tsx
 import { useState, useEffect } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import type { GetServerSideProps } from 'next';
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
+import { Session } from "next-auth";
 import { useRouter } from 'next/router';
 import QuantumLines from '@/components/QuantumLines';
+import clientPromise from '../lib/mongodb';
+import { IUser } from '../lib/models/User'; // IUser をインポート
 
 interface User {
   id: string;
@@ -128,7 +130,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const client = await clientPromise;
   const db = client.db();
 
-  const user = await db.collection('users').findOne<User>({ email: session.user.email });
+  const user = await db.collection('users').findOne<IUser>({ email: session.user.email });
 
   return {
     props: {
@@ -137,8 +139,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         name: user?.name || '',
         email: user?.email || '',
         image: user?.image || '',
-        profileImage: user?.profileImage || null,
-        backgroundImage: user?.backgroundImage || null,
+        profileImage: user?.profileImage || null, // 追加
+        backgroundImage: user?.backgroundImage || null, // 追加
       },
     },
   };

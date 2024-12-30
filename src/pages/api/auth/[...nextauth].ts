@@ -10,6 +10,7 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
+    // 他のプロバイダーを追加する場合はここに記述
   ],
   adapter: MongoDBAdapter(clientPromise),
   callbacks: {
@@ -21,6 +22,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NEXTAUTH_DEBUG === 'true',
 };
 
 export default NextAuth(authOptions);
