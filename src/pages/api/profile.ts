@@ -2,7 +2,7 @@
 import { getSession } from "next-auth/react";
 import type { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "../../lib/mongodb";
-import { ObjectId } from "mongodb"; // 追加
+import { ObjectId } from "mongodb";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
@@ -25,8 +25,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const client = await clientPromise;
     const db = client.db();
 
+    // session.user.id を ObjectId に変換
+    const userId = new ObjectId(session.user.id);
+
     await db.collection("users").updateOne(
-      { _id: new ObjectId(session.user.id) }, // ObjectIdに変換
+      { _id: userId },
       {
         $set: {
           displayName,

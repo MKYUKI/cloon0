@@ -11,7 +11,7 @@ const Home: React.FC = () => {
     <div>
       <Navbar />
       <main style={styles.main}>
-        <h1 style={styles.title}>Cloon0 へようこそ！</h1>
+        <h1 style={styles.title}>0 へようこそ！</h1>
         {session ? (
           <div style={styles.content}>
             <p style={styles.text}>ログイン中: {session.user?.email}</p>

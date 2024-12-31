@@ -6,31 +6,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { prompt } = req.body;
+  const { message } = req.body;
 
-  if (!prompt) {
-    return res.status(400).json({ error: "Prompt is required" });
+  if (!message) {
+    return res.status(400).json({ error: "メッセージは必須です。" });
   }
 
   try {
-    const response = await fetch("https://api.gemini.example.com/v1/chat", { // 正しいGemini APIエンドポイントに置き換えてください
+    const response = await fetch("https://api.gemini.com/your-endpoint", { // 正しいエンドポイントに変更
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.GEMINI_API_KEY}`,
+        Authorization: `Bearer ${process.env.GOOGLE_Gemini_API}`, // 環境変数名を確認
       },
-      body: JSON.stringify({ prompt }),
+      body: JSON.stringify({ message }),
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Gemini API error");
+      throw new Error(`Gemini API Error: ${response.statusText}`);
     }
 
     const data = await response.json();
-    res.status(200).json({ response: data });
+    res.status(200).json({ reply: data.reply });
   } catch (error: any) {
     console.error("Gemini API Error:", error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "Gemini APIとの通信に失敗しました。" });
   }
 }
