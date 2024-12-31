@@ -1,114 +1,142 @@
-// src/components/Chat.tsx
-import React, { useState } from "react";
+// components/Chat.tsx
+
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+interface Message {
+  _id: string;
+  sender: {
+    _id: string;
+    name: string;
+    image: string;
+  };
+  receiver: {
+    _id: string;
+    name: string;
+    image: string;
+  };
+  content: string;
+  createdAt: string;
+}
 
 const Chat: React.FC = () => {
-  const [prompt, setPrompt] = useState("");
-  const [response, setResponse] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [receiverId, setReceiverId] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-    setResponse("");
-
-    try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ prompt }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Something went wrong");
+  useEffect(() => {
+    // 初期メッセージの取得（例として特定のユーザーとチャット）
+    const fetchMessages = async () => {
+      if (receiverId) {
+        const response = await axios.get(`/api/chat?receiverId=${receiverId}`);
+        setMessages(response.data);
       }
+    };
+    fetchMessages();
+  }, [receiverId]);
 
-      setResponse(data.response);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+  const handleSend = async () => {
+    if (!newMessage || !receiverId) return;
+
+    const response = await axios.post("/api/chat", {
+      receiver: receiverId,
+      content: newMessage,
+    });
+
+    setMessages([...messages, response.data]);
+    setNewMessage("");
   };
 
   return (
     <div style={styles.container}>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <textarea
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="メッセージを入力してください..."
-          style={styles.textarea}
-          required
+      <h2>チャット</h2>
+      <div style={styles.messages}>
+        {messages.map((msg) => (
+          <div key={msg._id} style={msg.sender._id === msg.receiver._id ? styles.sent : styles.received}>
+            <img src={msg.sender.image} alt={msg.sender.name} style={styles.avatar} />
+            <div style={styles.messageContent}>
+              <p>{msg.content}</p>
+              <span>{new Date(msg.createdAt).toLocaleTimeString()}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={styles.inputArea}>
+        <input
+          type="text"
+          placeholder="受信者IDを入力..."
+          value={receiverId}
+          onChange={(e) => setReceiverId(e.target.value)}
+          style={styles.input}
         />
-        <button type="submit" style={styles.button} disabled={loading}>
-          {loading ? "送信中..." : "送信"}
-        </button>
-      </form>
-      {response && (
-        <div style={styles.response}>
-          <h3>回答:</h3>
-          <p>{response}</p>
-        </div>
-      )}
-      {error && (
-        <div style={styles.error}>
-          <p>{error}</p>
-        </div>
-      )}
+        <input
+          type="text"
+          placeholder="メッセージを入力..."
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          style={styles.input}
+        />
+        <button onClick={handleSend} style={styles.button}>送信</button>
+      </div>
     </div>
   );
 };
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
-    maxWidth: "600px",
-    margin: "2rem auto",
-    padding: "1rem",
-    backgroundColor: "#fff",
-    borderRadius: "8px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  textarea: {
-    resize: "vertical",
-    minHeight: "100px",
-    padding: "0.5rem",
-    fontSize: "1rem",
-    borderRadius: "4px",
     border: "1px solid #ccc",
+    borderRadius: "8px",
+    padding: "1rem",
+    maxWidth: "600px",
+    width: "100%",
+  },
+  messages: {
+    maxHeight: "400px",
+    overflowY: "scroll",
     marginBottom: "1rem",
   },
+  sent: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "0.5rem",
+    justifyContent: "flex-end",
+  },
+  received: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: "0.5rem",
+    justifyContent: "flex-start",
+  },
+  avatar: {
+    width: "40px",
+    height: "40px",
+    borderRadius: "50%",
+    marginRight: "0.5rem",
+  },
+  messageContent: {
+    background: "#f1f1f1",
+    borderRadius: "8px",
+    padding: "0.5rem",
+    maxWidth: "70%",
+  },
+  inputArea: {
+    display: "flex",
+    alignItems: "center",
+  },
+  input: {
+    flex: 1,
+    padding: "0.5rem",
+    marginRight: "0.5rem",
+    borderRadius: "4px",
+    border: "1px solid #ccc",
+  },
   button: {
-    padding: "0.75rem",
-    backgroundColor: "#28a745",
-    color: "#fff",
+    padding: "0.5rem 1rem",
+    borderRadius: "4px",
     border: "none",
-    borderRadius: "4px",
-    fontSize: "1rem",
+    background: "#333",
+    color: "#fff",
     cursor: "pointer",
-    transition: "background-color 0.3s ease",
-  },
-  response: {
-    marginTop: "1rem",
-    padding: "1rem",
-    backgroundColor: "#f8f9fa",
-    borderRadius: "4px",
-  },
-  error: {
-    marginTop: "1rem",
-    padding: "1rem",
-    backgroundColor: "#f8d7da",
-    color: "#721c24",
-    borderRadius: "4px",
   },
 };
 
