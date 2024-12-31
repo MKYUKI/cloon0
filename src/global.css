@@ -57,3 +57,25 @@ main {
   z-index: 1;
   padding: 20px;
 }
+/* src/styles/globals.css */
+
+/* CSSリセット */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: #ffffff; /* 全体の背景色を純白に設定 */
+  color: #333333;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 必要に応じて追加のグローバルスタイルを記述 */
