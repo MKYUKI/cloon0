@@ -4,7 +4,7 @@ import { MongoClient } from "mongodb";
 const uri = process.env.MONGODB_URI!;
 const options = {};
 
-let client;
+let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
 if (!process.env.MONGODB_URI) {
@@ -12,15 +12,14 @@ if (!process.env.MONGODB_URI) {
 }
 
 if (process.env.NODE_ENV === "development") {
-  // 開発環境ではグローバル変数を使用してクライアントをキャッシュします
-  // 再起動時に新しいクライアントが作成されるのを防ぎます
+  // グローバル変数を使用してクライアントをキャッシュ
   if (!(global as any)._mongoClientPromise) {
     client = new MongoClient(uri, options);
     (global as any)._mongoClientPromise = client.connect();
   }
   clientPromise = (global as any)._mongoClientPromise;
 } else {
-  // 本番環境では新しいクライアントを作成します
+  // 本番環境では新しいクライアントを作成
   client = new MongoClient(uri, options);
   clientPromise = client.connect();
 }
