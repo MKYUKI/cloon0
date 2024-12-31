@@ -3,6 +3,7 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../lib/mongodb";
+import { ObjectId } from "mongodb";
 
 export default NextAuth({
   providers: [
@@ -37,7 +38,7 @@ export default NextAuth({
       // 初期カスタムフィールドを追加
       const db = (await clientPromise).db();
       await db.collection("users").updateOne(
-        { _id: user.id },
+        { _id: new ObjectId(user.id) }, // ObjectIdに変換
         {
           $set: {
             displayName: user.name,
