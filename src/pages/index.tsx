@@ -1,13 +1,18 @@
 // src/pages/index.tsx
 
-import { useEffect, useRef } from "react";
-import { useSession } from "next-auth/react";
+import { useState, useEffect, useRef } from "react";
+import { useSession, signOut } from "next-auth/react";
+import axios from "axios";
+import Tweet from "../components/Tweet";
+import CreateTweet from "../components/CreateTweet";
 import Chat from "../components/Chat";
+import SignInButton from "../components/SignInButton";
 import * as THREE from "three";
 import styles from "../styles/Home.module.css";
 
 const Home: React.FC = () => {
   const { data: session } = useSession();
+  const [tweets, setTweets] = useState<any[]>([]);
   const threeContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -97,6 +102,18 @@ const Home: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchTweets = async () => {
+      try {
+        const response = await axios.get('/api/tweets');
+        setTweets(response.data);
+      } catch (error) {
+        console.error("ツイートの取得に失敗しました:", error);
+      }
+    };
+    fetchTweets();
+  }, []);
+
   return (
     <div>
       <main className={styles.main}>
@@ -107,10 +124,18 @@ const Home: React.FC = () => {
           {session ? (
             <div className={styles.content}>
               <p className={styles.text}>ログイン中: {session.user?.email}</p>
-              <Chat />
+              <button onClick={() => signOut()} className={styles.logoutButton}>
+                ログアウト
+              </button>
+              <CreateTweet />
+              <Chat receiverId={session.user.email} />
+              <TweetList tweets={tweets} />
             </div>
           ) : (
-            <p className={styles.text}>ログインしてください。</p>
+            <div className={styles.signInSection}>
+              <p className={styles.text}>ログインしてください。</p>
+              <SignInButton />
+            </div>
           )}
         </div>
       </main>
@@ -121,6 +146,19 @@ const Home: React.FC = () => {
         <input type="file" className={styles.inputFile} />
         <button className={styles.sendButton}>送信</button>
       </div>
+    </div>
+  );
+};
+
+const TweetList: React.FC<{ tweets: any[] }> = ({ tweets }) => {
+  return (
+    <div>
+      {tweets.map((tweet) => (
+        <Tweet
+          key={tweet._id}
+          tweet={tweet}
+        />
+      ))}
     </div>
   );
 };

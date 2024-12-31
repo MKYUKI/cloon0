@@ -1,84 +1,113 @@
 /* src/styles/Home.module.css */
 
 .main {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    background-color: #ffffff; /* 背景色を純白に変更 */
-  }
-  
-  .background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0; /* 背景の線がコンテンツの後ろに表示されるように設定 */
-    opacity: 0.3; /* 背景の線の透明度を調整 */
-  }
-  
-  .container {
-    position: relative;
-    z-index: 1; /* 背景より手前 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-  
-  .title {
-    font-size: 3rem;
-    color: #333;
-    margin-bottom: 1rem;
-  }
-  
-  .content {
-    width: 100%;
-    max-width: 800px;
-    text-align: center;
-  }
-  
-  .text {
-    font-size: 1.25rem;
-    color: #555;
-    margin-bottom: 2rem;
-  }
-  
-  .chatInputArea {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: #f7f7f7;
-    padding: 0.5rem;
-    border-top: 1px solid #ccc;
-    z-index: 2;
-  }
-  
-  .inputText {
-    width: 60%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 0.5rem;
-  }
-  
-  .inputFile {
-    margin-right: 0.5rem;
-  }
-  
-  .sendButton {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    background: #333;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #ffffff; /* 背景色を純白に変更 */
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* 背景の線がコンテンツの後ろに表示されるように設定 */
+  opacity: 0.3; /* 背景の線の透明度を調整 */
+}
+
+.container {
+  position: relative;
+  z-index: 1; /* 背景より手前 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.title {
+  font-size: 3rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.content {
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+}
+
+.text {
+  font-size: 1.25rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.logoutButton {
+  background-color: #ff4d4f;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.logoutButton:hover {
+  background-color: #ff7875;
+}
+
+.chatInputArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #f7f7f7;
+  padding: 0.5rem;
+  border-top: 1px solid #ccc;
+  z-index: 2;
+}
+
+.inputText {
+  width: 60%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+}
+
+.inputFile {
+  margin-right: 0.5rem;
+}
+
+.sendButton {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sendButton:hover {
+  background: #555;
+}
+
+.signInSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signInSection .text {
+  margin-bottom: 1rem;
+}

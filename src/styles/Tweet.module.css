@@ -1,0 +1,40 @@
+/* src/styles/Tweet.module.css */
+
+.container {
+    display: flex;
+    padding: 1rem;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+  }
+  
+  .content {
+    flex: 1;
+  }
+  
+  .actions {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .button {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    background-color: #1da1f2;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #0d95e8;
+  }
+  

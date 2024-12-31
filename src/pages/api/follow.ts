@@ -1,4 +1,4 @@
-// pages/api/follow.ts
+// src/pages/api/follow.ts
 
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
@@ -9,52 +9,45 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const session = await getSession({ req });
 
   if (!session) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "ログインが必要です。" });
   }
 
   await dbConnect();
 
-  const user = await User.findOne({ email: session.user?.email });
+  const { targetId } = req.query;
 
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
+  if (!targetId || typeof targetId !== "string") {
+    return res.status(400).json({ message: "無効なターゲットIDです。" });
   }
 
-  const { targetId } = req.body;
-
-  if (!targetId) {
-    return res.status(400).json({ message: "Target ID is required" });
-  }
-
+  const user = await User.findOne({ email: session.user.email });
   const targetUser = await User.findById(targetId);
 
-  if (!targetUser) {
-    return res.status(404).json({ message: "Target user not found" });
+  if (!user || !targetUser) {
+    return res.status(404).json({ message: "ユーザーが見つかりません。" });
   }
 
   switch (req.method) {
     case "POST":
-      // フォローする
-      if (!user.following.includes(targetId)) {
-        user.following.push(targetId);
+      // フォローを追加する
+      if (!user.following.includes(targetUser._id)) {
+        user.following.push(targetUser._id);
         targetUser.followers.push(user._id);
         await user.save();
         await targetUser.save();
       }
-      res.status(200).json({ message: "フォローしました" });
+      res.status(200).json({ message: "フォローしました。" });
       break;
-
     case "DELETE":
       // フォローを解除する
-      user.following = user.following.filter(id => id.toString() !== targetId);
-      targetUser.followers = targetUser.followers.filter(id => id.toString() !== user._id.toString());
+      user.following = user.following.filter((id: mongoose.Types.ObjectId) => id.toString() !== targetId);
+      targetUser.followers = targetUser.followers.filter((id: mongoose.Types.ObjectId) => id.toString() !== user._id.toString());
       await user.save();
       await targetUser.save();
-      res.status(200).json({ message: "フォローを解除しました" });
+      res.status(200).json({ message: "フォローを解除しました。" });
       break;
-
     default:
-      res.setHeader("Allow", ["POST", "DELETE"]);
-      res.status(405).end(`Method ${req.method} Not Allowed`);
+      res.status(405).json({ message: "Method Not Allowed" });
+      break;
   }
 }

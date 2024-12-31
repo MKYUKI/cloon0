@@ -11,6 +11,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'next/core-web-vitals',
+    'plugin:prettier/recommended', // Prettierとの統合
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -20,8 +21,9 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
-    // カスタムルールの追加
+    'prettier/prettier': 'error',
+    // 必要に応じてカスタムルールを追加
   },
 };

@@ -1,7 +1,9 @@
-// components/Chat.tsx
+// src/components/Chat.tsx
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { io, Socket } from "socket.io-client";
+import styles from "../styles/Chat.module.css";
 
 interface Message {
   _id: string;
@@ -19,125 +21,104 @@ interface Message {
   createdAt: string;
 }
 
-const Chat: React.FC = () => {
+interface ChatProps {
+  receiverId: string;
+}
+
+let socket: Socket;
+
+const Chat: React.FC<ChatProps> = ({ receiverId }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
-  const [receiverId, setReceiverId] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 初期メッセージの取得（例として特定のユーザーとチャット）
+    // Socket.ioの初期化
+    socket = io("/api/socket");
+
+    socket.on("connect", () => {
+      console.log("Connected to Socket.io for chat");
+    });
+
+    socket.on("newChatMessage", (message: Message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+      scrollToBottom();
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
     const fetchMessages = async () => {
-      if (receiverId) {
+      try {
         const response = await axios.get(`/api/chat?receiverId=${receiverId}`);
         setMessages(response.data);
+      } catch (error) {
+        console.error("チャットメッセージの取得に失敗しました:", error);
       }
     };
     fetchMessages();
   }, [receiverId]);
 
   const handleSend = async () => {
-    if (!newMessage || !receiverId) return;
-
-    const response = await axios.post("/api/chat", {
+    if (!newMessage.trim()) return;
+    const messageData = {
+      sender: "current_user_id", // 実際のユーザーIDに置き換えてください
       receiver: receiverId,
       content: newMessage,
-    });
+    };
+    try {
+      await axios.post("/api/chat", messageData);
+      socket.emit("sendChatMessage", messageData);
+      setNewMessage("");
+      scrollToBottom();
+    } catch (error) {
+      console.error("メッセージの送信に失敗しました:", error);
+    }
+  };
 
-    setMessages([...messages, response.data]);
-    setNewMessage("");
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSend();
+    }
+  };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <div style={styles.container}>
-      <h2>チャット</h2>
-      <div style={styles.messages}>
+    <div className={styles.chatContainer}>
+      <div className={styles.messages}>
         {messages.map((msg) => (
-          <div key={msg._id} style={msg.sender._id === msg.receiver._id ? styles.sent : styles.received}>
-            <img src={msg.sender.image} alt={msg.sender.name} style={styles.avatar} />
-            <div style={styles.messageContent}>
+          <div
+            key={msg._id}
+            className={msg.sender._id === receiverId ? styles.sent : styles.received}
+          >
+            <img src={msg.sender.image || "/default-avatar.png"} alt={msg.sender.name} className={styles.avatar} />
+            <div className={styles.messageContent}>
               <p>{msg.content}</p>
               <span>{new Date(msg.createdAt).toLocaleTimeString()}</span>
             </div>
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
-      <div style={styles.inputArea}>
-        <input
-          type="text"
-          placeholder="受信者IDを入力..."
-          value={receiverId}
-          onChange={(e) => setReceiverId(e.target.value)}
-          style={styles.input}
-        />
+      <div className={styles.inputArea}>
         <input
           type="text"
           placeholder="メッセージを入力..."
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          style={styles.input}
+          onKeyDown={handleKeyDown}
+          className={styles.inputText}
         />
-        <button onClick={handleSend} style={styles.button}>送信</button>
+        <button onClick={handleSend} className={styles.sendButton}>送信</button>
       </div>
     </div>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    padding: "1rem",
-    maxWidth: "600px",
-    width: "100%",
-  },
-  messages: {
-    maxHeight: "400px",
-    overflowY: "scroll",
-    marginBottom: "1rem",
-  },
-  sent: {
-    display: "flex",
-    alignItems: "center",
-    marginBottom: "0.5rem",
-    justifyContent: "flex-end",
-  },
-  received: {
-    display: "flex",
-    alignItems: "center",
-    marginBottom: "0.5rem",
-    justifyContent: "flex-start",
-  },
-  avatar: {
-    width: "40px",
-    height: "40px",
-    borderRadius: "50%",
-    marginRight: "0.5rem",
-  },
-  messageContent: {
-    background: "#f1f1f1",
-    borderRadius: "8px",
-    padding: "0.5rem",
-    maxWidth: "70%",
-  },
-  inputArea: {
-    display: "flex",
-    alignItems: "center",
-  },
-  input: {
-    flex: 1,
-    padding: "0.5rem",
-    marginRight: "0.5rem",
-    borderRadius: "4px",
-    border: "1px solid #ccc",
-  },
-  button: {
-    padding: "0.5rem 1rem",
-    borderRadius: "4px",
-    border: "none",
-    background: "#333",
-    color: "#fff",
-    cursor: "pointer",
-  },
 };
 
 export default Chat;

@@ -1,32 +1,61 @@
-// pages/profile.tsx
+// src/pages/profile.tsx
 
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useSession } from "next-auth/react";
-import { useState, useEffect } from "react";
 import axios from "axios";
+import styles from "../styles/Profile.module.css";
 
 const Profile: React.FC = () => {
   const { data: session } = useSession();
-  const [name, setName] = useState("");
-  const [image, setImage] = useState("");
-  const [backgroundImage, setBackgroundImage] = useState("");
+  const [name, setName] = useState<string>("");
+  const [image, setImage] = useState<string>("");
+  const [backgroundImage, setBackgroundImage] = useState<string>("");
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [previewBackground, setPreviewBackground] = useState<string | null>(null);
 
   useEffect(() => {
     if (session) {
-      // APIからユーザーデータを取得
-      axios.get('/api/user').then(response => {
-        const user = response.data;
-        setName(user.name);
-        setImage(user.image);
-        setBackgroundImage(user.backgroundImage);
-      });
+      setName(session.user?.name || "");
+      setImage(session.user?.image || "");
+      setBackgroundImage(session.user?.backgroundImage || "");
     }
   }, [session]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleBackgroundChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewBackground(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // APIにユーザーデータを送信
-    await axios.post('/api/user', { name, image, backgroundImage });
-    alert('プロフィールが更新されました');
+    try {
+      await axios.post("/api/profile", {
+        name,
+        image: previewImage,
+        backgroundImage: previewBackground,
+      });
+      alert("プロフィールが更新されました！");
+    } catch (error) {
+      console.error("プロフィールの更新に失敗しました:", error);
+      alert("プロフィールの更新に失敗しました。");
+    }
   };
 
   if (!session) {
@@ -34,65 +63,32 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <div style={styles.container}>
+    <div className={styles.profileContainer}>
       <h1>プロフィール編集</h1>
-      <form onSubmit={handleSubmit} style={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <label>
           名前:
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            style={styles.input}
+            required
           />
         </label>
         <label>
-          プロフィール画像URL:
-          <input
-            type="text"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            style={styles.input}
-          />
+          プロフィール画像:
+          <input type="file" accept="image/*" onChange={handleImageChange} />
+          {previewImage && <img src={previewImage} alt="プロフィールプレビュー" className={styles.preview} />}
         </label>
         <label>
-          背景画像URL:
-          <input
-            type="text"
-            value={backgroundImage}
-            onChange={(e) => setBackgroundImage(e.target.value)}
-            style={styles.input}
-          />
+          背景画像:
+          <input type="file" accept="image/*" onChange={handleBackgroundChange} />
+          {previewBackground && <img src={previewBackground} alt="背景プレビュー" className={styles.preview} />}
         </label>
-        <button type="submit" style={styles.button}>更新</button>
+        <button type="submit">更新</button>
       </form>
     </div>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    padding: '2rem',
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    maxWidth: '400px',
-  },
-  input: {
-    marginBottom: '1rem',
-    padding: '0.5rem',
-    fontSize: '1rem',
-  },
-  button: {
-    padding: '0.5rem',
-    fontSize: '1rem',
-    backgroundColor: '#333',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
 };
 
 export default Profile;

@@ -1,50 +1,47 @@
-// components/FollowButton.tsx
+// src/components/FollowButton.tsx
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import styles from "../styles/FollowButton.module.css";
 
 interface FollowButtonProps {
   targetId: string;
 }
 
 const FollowButton: React.FC<FollowButtonProps> = ({ targetId }) => {
-  const [isFollowing, setIsFollowing] = useState(false);
+  const [isFollowing, setIsFollowing] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    // 初期状態の取得
+    // フォロー状態を取得
     const fetchFollowStatus = async () => {
-      const response = await axios.get(`/api/user`);
-      const user = response.data;
-      setIsFollowing(user.following.includes(targetId));
+      try {
+        const response = await axios.get(`/api/user/${targetId}/follow-status`);
+        setIsFollowing(response.data.isFollowing);
+      } catch (error) {
+        console.error("フォロー状態の取得に失敗しました:", error);
+      }
     };
     fetchFollowStatus();
   }, [targetId]);
 
   const handleFollow = async () => {
-    if (isFollowing) {
-      await axios.delete("/api/follow", { data: { targetId } });
-    } else {
-      await axios.post("/api/follow", { targetId });
+    setLoading(true);
+    try {
+      await axios.post(`/api/user/${targetId}/follow`);
+      setIsFollowing(!isFollowing);
+    } catch (error) {
+      console.error("フォロー処理に失敗しました:", error);
+    } finally {
+      setLoading(false);
     }
-    setIsFollowing(!isFollowing);
   };
 
   return (
-    <button onClick={handleFollow} style={styles.button}>
-      {isFollowing ? "フォロー中" : "フォローする"}
+    <button onClick={handleFollow} className={styles.followButton} disabled={loading}>
+      {isFollowing ? "フォロー解除" : "フォロー"}
     </button>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  button: {
-    padding: "0.5rem 1rem",
-    backgroundColor: "#0070f3",
-    color: "#fff",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-  },
 };
 
 export default FollowButton;
