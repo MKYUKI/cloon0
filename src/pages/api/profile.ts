@@ -1,52 +1,43 @@
 // src/pages/api/profile.ts
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
-import clientPromise from '../../lib/mongodb';
+import { getSession } from "next-auth/react";
+import type { NextApiRequest, NextApiResponse } from "next";
+import clientPromise from "../../lib/mongodb";
 
-interface ProfileUpdateResponse {
-  message?: string;
-  error?: string;
-}
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<ProfileUpdateResponse>
-) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   const session = await getSession({ req });
 
-  if (!session || !session.user?.email) {
-    return res.status(401).json({ error: 'Unauthorized' });
+  if (!session) {
+    return res.status(401).json({ error: "認証が必要です。" });
   }
 
-  const { name, profileImage, backgroundImage } = req.body;
+  const { displayName, avatar, backgroundImage } = req.body;
 
-  if (!name) {
-    return res.status(400).json({ error: 'Name is required' });
+  if (!displayName) {
+    return res.status(400).json({ error: "表示名は必須です。" });
   }
 
   try {
     const client = await clientPromise;
     const db = client.db();
 
-    await db.collection('users').updateOne(
-      { email: session.user.email },
+    await db.collection("users").updateOne(
+      { _id: session.user.id },
       {
         $set: {
-          name,
-          profileImage: profileImage || '',
-          backgroundImage: backgroundImage || '',
+          displayName,
+          avatar,
+          backgroundImage,
         },
-      },
-      { upsert: true }
+      }
     );
 
-    return res.status(200).json({ message: 'プロフィールが更新されました' });
+    res.status(200).json({ message: "プロフィールが更新されました。" });
   } catch (error: any) {
-    console.error('Error updating profile:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    console.error("プロフィール更新エラー:", error);
+    res.status(500).json({ error: "プロフィールの更新に失敗しました。" });
   }
 }

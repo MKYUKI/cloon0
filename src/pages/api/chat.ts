@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const response = await fetch("https://api.gemini.example.com/v1/chat", { // Gemini APIの正しいエンドポイントに置き換えてください
+    const response = await fetch("https://api.gemini.example.com/v1/chat", { // 正しいGemini APIエンドポイントに置き換えてください
       method: "POST",
       headers: {
         "Content-Type": "application/json",
