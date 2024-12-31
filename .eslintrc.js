@@ -18,7 +18,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 12,
+    ecmaVersion: 12, // または最新のバージョン
     sourceType: 'module',
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],

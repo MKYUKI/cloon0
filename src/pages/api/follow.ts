@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import dbConnect from "../../utils/dbConnect";
 import User from "../../models/User";
+import mongoose from "mongoose"; // 追加
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getSession({ req });

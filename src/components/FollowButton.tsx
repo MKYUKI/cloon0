@@ -13,7 +13,6 @@ const FollowButton: React.FC<FollowButtonProps> = ({ targetId }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    // フォロー状態を取得
     const fetchFollowStatus = async () => {
       try {
         const response = await axios.get(`/api/user/${targetId}/follow-status`);
@@ -28,8 +27,13 @@ const FollowButton: React.FC<FollowButtonProps> = ({ targetId }) => {
   const handleFollow = async () => {
     setLoading(true);
     try {
-      await axios.post(`/api/user/${targetId}/follow`);
-      setIsFollowing(!isFollowing);
+      if (isFollowing) {
+        await axios.delete(`/api/user/${targetId}/follow`);
+        setIsFollowing(false);
+      } else {
+        await axios.post(`/api/user/${targetId}/follow`);
+        setIsFollowing(true);
+      }
     } catch (error) {
       console.error("フォロー処理に失敗しました:", error);
     } finally {

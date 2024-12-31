@@ -2,6 +2,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import styles from "../styles/Profile.module.css";
+import axios from "axios";
+
 
 interface SocialLinks {
   github?: string;
