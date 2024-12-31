@@ -1,0 +1,54 @@
+/* src/styles/SignIn.module.css */
+.container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .content {
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .title {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .buttonContainer {
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #4285f4;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #357ae8;
+  }
+  

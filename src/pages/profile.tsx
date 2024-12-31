@@ -1,15 +1,27 @@
 // src/pages/profile.tsx
 import { useSession, getSession } from "next-auth/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 
 const Profile: React.FC = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [displayName, setDisplayName] = useState(session?.user?.displayName || "");
   const [avatar, setAvatar] = useState(session?.user?.avatar || "");
   const [backgroundImage, setBackgroundImage] = useState(session?.user?.backgroundImage || "");
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (session) {
+      setDisplayName(session.user.displayName || "");
+      setAvatar(session.user.avatar || "");
+      setBackgroundImage(session.user.backgroundImage || "");
+    }
+  }, [session]);
+
+  if (status === "loading") {
+    return <p>読み込み中...</p>;
+  }
 
   if (!session) {
     return <p>ログインしてください。</p>;
