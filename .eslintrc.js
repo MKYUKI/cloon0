@@ -1,4 +1,3 @@
-// .eslintrc.js
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
@@ -35,6 +34,5 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     'react/prop-types': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
-    // 必要なルールを追加
   },
 };
