@@ -1,4 +1,4 @@
-// utils/dbConnect.ts
+// src/utils/dbConnect.ts
 
 import mongoose from "mongoose";
 
@@ -11,8 +11,9 @@ if (!MONGODB_URI) {
 }
 
 /**
- * グローバル変数を使用して接続をキャッシュします。
- * これはホットリロード時に再接続を防ぐためです。
+ * Global is used here to maintain a cached connection across hot reloads
+ * in development. This prevents connections growing exponentially
+ * during API Route usage.
  */
 let cached = (global as any).mongoose;
 
