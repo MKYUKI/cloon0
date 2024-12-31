@@ -29,13 +29,12 @@ module.exports = {
     'next/core-web-vitals',
   ],
   rules: {
-    'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+    'prettier/prettier': 'error',
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-explicit-any': 'off', // 必要に応じて調整
-    'simple-import-sort/imports': 'error',
-    'simple-import-sort/exports': 'error',
+    '@typescript-eslint/no-explicit-any': 'off',
     'react/prop-types': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
+    // 必要なルールを追加
   },
 };
