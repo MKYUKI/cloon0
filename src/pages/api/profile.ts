@@ -1,47 +1,69 @@
 // src/pages/api/profile.ts
+
+import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
-import type { NextApiRequest, NextApiResponse } from "next";
-import clientPromise from "../../lib/mongodb";
-import { ObjectId } from "mongodb";
+import dbConnect from "../../utils/dbConnect";
+import User from "../../models/User";
+
+interface SocialLinks {
+  github?: string;
+  youtube?: string;
+  twitter?: string;
+  facebook?: string;
+  paypal?: string;
+  amazonJP?: string;
+  amazonUS?: string;
+}
+
+interface UserProfile {
+  name: string;
+  email: string;
+  image: string;
+  backgroundImage?: string;
+  socialLinks: SocialLinks;
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
   const session = await getSession({ req });
 
   if (!session) {
-    return res.status(401).json({ error: "認証が必要です。" });
+    return res.status(401).json({ message: "ログインが必要です。" });
   }
 
-  const { displayName, avatar, backgroundImage } = req.body;
+  await dbConnect();
 
-  if (!displayName) {
-    return res.status(400).json({ error: "表示名は必須です。" });
+  const user = await User.findOne({ email: session.user.email });
+
+  if (!user) {
+    return res.status(404).json({ message: "ユーザーが見つかりません。" });
   }
 
-  try {
-    const client = await clientPromise;
-    const db = client.db();
+  switch (req.method) {
+    case "GET":
+      // プロフィールの取得
+      const userProfile: UserProfile = {
+        name: user.name,
+        email: user.email,
+        image: user.image,
+        backgroundImage: user.backgroundImage,
+        socialLinks: user.socialLinks,
+      };
+      res.status(200).json({ user: userProfile });
+      break;
+    case "PUT":
+      // プロフィールの更新
+      const { name, image, backgroundImage, socialLinks } = req.body;
 
-    // session.user.id を ObjectId に変換
-    const userId = new ObjectId(session.user.id);
+      if (name) user.name = name;
+      if (image) user.image = image;
+      if (backgroundImage) user.backgroundImage = backgroundImage;
+      if (socialLinks) user.socialLinks = socialLinks;
 
-    await db.collection("users").updateOne(
-      { _id: userId },
-      {
-        $set: {
-          displayName,
-          avatar,
-          backgroundImage,
-        },
-      }
-    );
-
-    res.status(200).json({ message: "プロフィールが更新されました。" });
-  } catch (error: any) {
-    console.error("プロフィール更新エラー:", error);
-    res.status(500).json({ error: "プロフィールの更新に失敗しました。" });
+      await user.save();
+      res.status(200).json({ user: user });
+      break;
+    default:
+      res.status(405).json({ message: "Method Not Allowed" });
+      break;
   }
 }

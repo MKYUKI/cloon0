@@ -3,7 +3,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import dbConnect from "../../../utils/dbConnect"; // 修正済み
-import Tweet from "../../../models/Tweet";
+import Tweet from "../../../models/Tweet"; // 修正済み
 import User from "../../../models/User";
 import mongoose from "mongoose";
 
