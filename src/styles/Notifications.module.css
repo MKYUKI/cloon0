@@ -1,0 +1,30 @@
+/* src/styles/Notifications.module.css */
+
+.notificationsContainer {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .notifications {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .notification {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .notification:last-child {
+    border-bottom: none;
+  }
+  

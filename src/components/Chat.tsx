@@ -1,121 +1,71 @@
 // src/components/Chat.tsx
 
-import { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import { io, Socket } from "socket.io-client";
+import React, { useEffect, useState, useRef } from 'react';
+import { useSession } from 'next-auth/react';
 import styles from "../styles/Chat.module.css";
 
-interface Message {
-  _id: string;
-  sender: {
-    _id: string;
-    name: string;
-    image: string;
-  };
-  receiver: {
-    _id: string;
-    name: string;
-    image: string;
-  };
-  content: string;
-  createdAt: string;
-}
-
-interface ChatProps {
-  receiverId: string;
-}
-
-let socket: Socket;
-
-const Chat: React.FC<ChatProps> = ({ receiverId }) => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [newMessage, setNewMessage] = useState("");
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+const Chat: React.FC = () => {
+  const { data: session } = useSession();
+  const [messages, setMessages] = useState<string[]>([]);
+  const [input, setInput] = useState<string>('');
+  const ws = useRef<WebSocket | null>(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // Socket.ioの初期化
-    socket = io("/api/socket");
+    if (session) {
+      ws.current = new WebSocket(`ws://${window.location.host}/api/chat`);
 
-    socket.on("connect", () => {
-      console.log("Connected to Socket.io for chat");
-    });
+      ws.current.onopen = () => {
+        console.log('WebSocket connection established');
+      };
 
-    socket.on("newChatMessage", (message: Message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-      scrollToBottom();
-    });
+      ws.current.onmessage = (event) => {
+        setMessages((prev) => [...prev, event.data]);
+      };
 
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+      ws.current.onclose = () => {
+        console.log('WebSocket connection closed');
+      };
+
+      return () => {
+        ws.current?.close();
+      };
+    }
+  }, [session]);
 
   useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const response = await axios.get(`/api/chat?receiverId=${receiverId}`);
-        setMessages(response.data);
-      } catch (error) {
-        console.error("チャットメッセージの取得に失敗しました:", error);
-      }
-    };
-    fetchMessages();
-  }, [receiverId]);
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
-  const handleSend = async () => {
-    if (!newMessage.trim()) return;
-    const messageData = {
-      sender: "current_user_id", // 実際のユーザーIDに置き換えてください
-      receiver: receiverId,
-      content: newMessage,
-    };
-    try {
-      await axios.post("/api/chat", messageData);
-      socket.emit("sendChatMessage", messageData);
-      setNewMessage("");
-      scrollToBottom();
-    } catch (error) {
-      console.error("メッセージの送信に失敗しました:", error);
-    }
+  const sendMessage = () => {
+    if (input.trim() === '' || !ws.current) return;
+    ws.current.send(`${session?.user?.name}: ${input}`);
+    setInput('');
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleSend();
-    }
-  };
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  if (!session) return <div>ログインしてください。</div>;
 
   return (
     <div className={styles.chatContainer}>
       <div className={styles.messages}>
-        {messages.map((msg) => (
-          <div
-            key={msg._id}
-            className={msg.sender._id === receiverId ? styles.sent : styles.received}
-          >
-            <img src={msg.sender.image || "/default-avatar.png"} alt={msg.sender.name} className={styles.avatar} />
-            <div className={styles.messageContent}>
-              <p>{msg.content}</p>
-              <span>{new Date(msg.createdAt).toLocaleTimeString()}</span>
-            </div>
+        {messages.map((msg, idx) => (
+          <div key={idx} className={styles.message}>
+            {msg}
           </div>
         ))}
         <div ref={messagesEndRef} />
       </div>
-      <div className={styles.inputArea}>
+      <div className={styles.inputContainer}>
         <input
           type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           placeholder="メッセージを入力..."
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          onKeyDown={handleKeyDown}
-          className={styles.inputText}
+          className={styles.input}
         />
-        <button onClick={handleSend} className={styles.sendButton}>送信</button>
+        <button onClick={sendMessage} className={styles.sendButton}>
+          送信
+        </button>
       </div>
     </div>
   );

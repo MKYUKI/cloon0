@@ -1,12 +1,12 @@
-// src/pages/api/chat.ts
+// src/pages/api/notifications.ts
 
-import { NextApiRequest } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import { Server } from "ws";
 import { getSession } from "next-auth/react";
 import dbConnect from "../../utils/dbConnect";
 import User from "../../models/User";
 
-const ChatHandler = (req: NextApiRequest, res: any) => {
+const NotificationHandler = (req: NextApiRequest, res: any) => {
   if (req.method !== 'GET') {
     res.status(405).end(); // Method Not Allowed
     return;
@@ -16,7 +16,7 @@ const ChatHandler = (req: NextApiRequest, res: any) => {
 
   wss.on('connection', (ws) => {
     ws.on('message', (message) => {
-      // 受信したメッセージをすべてのクライアントにブロードキャスト
+      // 通知メッセージを送信
       wss.clients.forEach((client) => {
         if (client !== ws && client.readyState === 1) {
           client.send(message);
@@ -49,4 +49,4 @@ const ChatHandler = (req: NextApiRequest, res: any) => {
   });
 };
 
-export default ChatHandler;
+export default NotificationHandler;

@@ -1,7 +1,7 @@
 /* src/styles/FollowButton.module.css */
 
 .followButton {
-    padding: 0.25rem 0.75rem;
+    padding: 8px 16px;
     background-color: #1da1f2;
     color: #fff;
     border: none;
@@ -15,7 +15,7 @@
   }
   
   .followButton:disabled {
-    background-color: #a0cfff;
+    background-color: #ccc;
     cursor: not-allowed;
   }
   
